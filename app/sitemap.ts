@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllKnowledge, getAllArticles } from "@/lib/content";
 
-const BASE_URL = "https://obixconfig-lab.vercel.app";
+const BASE_URL = "https://labfpv.vercel.app";
 
 const STATIC_ROUTES = [
   "",

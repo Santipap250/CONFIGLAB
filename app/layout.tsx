@@ -13,7 +13,7 @@ import Footer from "@/components/Footer";
 import HudFrame from "@/components/HudFrame";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://obixconfig-lab.vercel.app"),
+  metadataBase: new URL("https://labfpv.vercel.app"),
   title: {
     default: "OBIXCONFIG LAB — FPV Tuning & Betaflight Reference",
     template: "%s",
