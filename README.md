@@ -231,6 +231,25 @@ markup and contrast math from here, but an actual automated audit needs a
 real browser, which this environment doesn't have. Worth running once
 deployed (Chrome DevTools → Lighthouse, or the axe browser extension).
 
+## Site-wide search
+- `lib/search-index.ts` — aggregates a single flat index across every
+  content source: Knowledge (8), Articles (5), CLI commands (25),
+  Troubleshooting entries (15), and the 3 Tools — computed server-side at
+  request time from the same data files each section already uses, so
+  there's nothing to keep in sync manually
+- `components/SiteSearch.tsx` — command-palette style modal, opens from
+  the search button in the header **or ⌘K / Ctrl+K from anywhere on the
+  site**. Live substring filtering across title/description/category as
+  you type, results grouped with a type badge (Knowledge/CLI Library/
+  Troubleshoot/Article/Tool)
+- Full keyboard support: ↑↓ to move selection, Enter to navigate, Escape
+  to close, Tab is trapped inside the dialog while open, focus returns to
+  the input on open
+- Previously Knowledge/CLI/Troubleshoot each had their own local filter
+  with no way to search across all of them at once — this sits on top of
+  those, it doesn't replace them (each section's own filter is still
+  better once you're already in that section)
+
 ## Commands
 ```
 npm install
