@@ -250,6 +250,34 @@ deployed (Chrome DevTools → Lighthouse, or the axe browser extension).
   those, it doesn't replace them (each section's own filter is still
   better once you're already in that section)
 
+## New favicon from the real OBIX Config Lab logo
+- Replaced the placeholder "scope reticle" favicon with your actual logo
+  (brush-lettered "OBIX CONFIG LAB" wordmark), processed from the uploaded
+  PNG:
+  1. **Background removed** — the near-black background was detected by
+     luminance and made transparent (soft edge blend, not a hard cutout,
+     so brush-stroke edges stay smooth) rather than a flat color-key that
+     would leave jagged edges
+  2. **`app/icon.png` (32×32 favicon):** cropped to just the bold cyan
+     **X** mark rather than the full wordmark — "OBIX CONFIG LAB" in full
+     would be illegible at 16–32px, the X alone reads clearly at that size
+  3. **`app/apple-icon.png` (180×180):** the full wordmark, centered on a
+     solid carbon (`#0a0d10`) background — Apple touch icons shouldn't be
+     transparent since iOS applies its own mask/shadow
+  4. **`public/brand/obix-logo.png`:** the full logo, background removed
+     and trimmed to its bounding box, kept as a general brand asset for
+     future use (e.g. About page, footer) — not wired into any page yet
+- All three PNGs are palette-quantized (same technique as the OG image
+  optimization) — **384KB source → 37KB full logo, 1.3KB favicon, 5.2KB
+  apple-icon**
+
+**I couldn't visually proof these against your original artwork from
+here** — the crop boundaries were found by scanning pixel opacity/column
+density, not by eye. I've attached the actual output PNGs (not just the
+zip) so you can check the X crop and background removal look right before
+you treat this as final — flag it if the X needs to be framed differently
+or if any edge fringing is visible.
+
 ## Commands
 ```
 npm install
