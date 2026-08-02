@@ -30,9 +30,25 @@ To add new content: drop a new `.mdx` file with frontmatter into
 `content/knowledge/` or `content/articles/` — no code changes needed, pages
 pick it up automatically at build time.
 
+## Phase 3 (this delivery)
+- `/cli` — CLI Library: 18 real Betaflight settings across Filters, PID,
+  Rates, Failsafe, Motor/ESC, Battery, Receiver (`lib/cli-data.ts`), with
+  live search + category filter chips and expandable detail (type/default/range)
+- `/troubleshoot` — Troubleshooting Center: 10 symptom-first entries
+  (`lib/troubleshoot-data.ts`) — describe the symptom, get likely causes and
+  a fix path, cross-linked to relevant Knowledge Hub articles
+- Both are client-side filtered (`CliExplorer`, `TroubleshootExplorer`) —
+  instant, no network round-trip — and driven entirely by the two typed data
+  files, so adding a command or symptom is a one-object edit, no page changes
+
+**Simplification vs. original sitemap:** `/cli/[command]` deep-link routes
+were skipped for now — commands expand inline via `<details>` instead, which
+covers the same "search + see defaults/ranges" job with less surface area.
+Can add dedicated routes later if you want shareable per-command URLs.
+
 ## Not yet built (routes return 404 until their phase)
-`/cli`, `/troubleshoot`, `/tuning`, `/tools`, `/about`, `/faq`, `/changelog`,
-`/resources` — planned for Phase 3–5.
+`/tuning`, `/tools`, `/about`, `/faq`, `/changelog`, `/resources` —
+planned for Phase 4–5.
 
 ## Commands
 ```
