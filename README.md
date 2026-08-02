@@ -196,6 +196,41 @@ them the next `order` number.
   cheap on mobile, and hidden entirely under `prefers-reduced-motion`
   the same way `ScopeTrace` is
 
+## Custom 404 page + accessibility pass
+- `app/not-found.tsx` — on-brand 404 ("signal lost" framing, a small
+  glitched signal-trace graphic) with quick links back into Knowledge/
+  CLI/Troubleshoot/Tools instead of a dead end
+- **Fixed a real mobile navigation gap:** the header nav (`Knowledge`,
+  `CLI Library`, `Troubleshoot`, `Tuning`, `Tools`, `Articles`) was
+  `hidden md:flex` with no mobile equivalent — on a phone there was
+  genuinely no way to reach those pages from the header at all (only via
+  the footer, or from Home's module grid). `components/Nav.tsx` now has an
+  accessible hamburger menu below `md`: `aria-expanded`/`aria-controls` on
+  the toggle, closes on route change and on `Escape`, full keyboard
+  support
+- Added a **skip-to-content link** (`app/layout.tsx`) — invisible until
+  keyboard-focused, jumps straight to `<main id="main-content">`, standard
+  practice for any site with a nav this size
+- **Language marking:** the Thai Knowledge entry now carries `lang: "th"`
+  in its frontmatter, applied as an actual `lang="th"` attribute on its
+  heading/article/index-card so screen readers switch pronunciation
+  correctly instead of reading Thai text with English rules
+- **Color contrast:** checked all text/background pairs in the token
+  system against WCAG AA. Everything passes — `--color-ash` on
+  `--color-carbon` is 6.6:1, the tightest pairing
+  (`--color-phosphor-dim` on `--color-carbon`, used for small mono
+  category labels) is 5.0:1, both clear of the 4.5:1 AA minimum for
+  normal text. No color changes were needed.
+- `<details>`/`<summary>` (CLI Library, Troubleshooting, FAQ) were already
+  keyboard-accessible natively — no img tags anywhere without alt text,
+  since the site uses no raster `<img>` elements at all (icons are inline
+  SVG, all currently `aria-hidden`)
+
+**Not done as part of this pass:** a full Lighthouse/axe run — I can check
+markup and contrast math from here, but an actual automated audit needs a
+real browser, which this environment doesn't have. Worth running once
+deployed (Chrome DevTools → Lighthouse, or the axe browser extension).
+
 ## Commands
 ```
 npm install
