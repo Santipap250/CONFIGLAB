@@ -1,1 +1,37 @@
+---
+title: "Reading Your First Blackbox Log"
+description: "A practical walkthrough of opening a blackbox log and knowing what you're actually looking at."
+date: "2026-01-15"
+tags: ["blackbox", "tuning"]
+---
 
+Blackbox logging records gyro, PID, motor output, and RC input at high
+sample rates directly to onboard flash or an SD card. It turns "the quad
+feels weird" into something you can actually diagnose.
+
+## Before you open the log
+
+Fly a short, deliberate test flight: a few punch-outs, some fast direction
+changes, and a bit of hover. A log full of gentle cruising doesn't stress the
+tune enough to show problems.
+
+## What to look at first
+
+Start with the gyro trace against setpoint on one axis (usually roll).
+A well-tuned axis tracks setpoint closely with minimal overshoot and no
+persistent oscillation after a sharp stick input. Fuzzy thickening on the
+gyro trace points to filtering, not PID — see *Understanding Gyro & D-term
+Filters* in the Knowledge Hub before touching P/I/D values.
+
+## Motor output traces
+
+Check that motor outputs aren't clipping at 0% or 100% during normal flying
+— clipping means the tune or throttle range is asking for more correction
+than the motors can deliver, and no amount of PID tuning fixes that; it's a
+power or prop-loading problem.
+
+## Step response
+
+If your logging tool supports a PID step-response plot, it's the fastest way
+to see overshoot and settling time per axis at a glance, without having to
+eyeball raw traces across the whole flight.

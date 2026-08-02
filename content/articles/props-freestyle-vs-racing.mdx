@@ -1,0 +1,38 @@
+---
+title: "Choosing Props for Freestyle vs Racing"
+description: "Pitch, blade count, and material trade-offs, matched to what you're actually flying."
+date: "2026-02-02"
+tags: ["hardware", "props"]
+---
+
+Prop choice changes thrust curve, efficiency, and noise signature — all of
+which feed back into how the airframe should be tuned.
+
+## Pitch
+
+Higher pitch moves more air per rotation at a given RPM, giving higher top
+speed but drawing more current and heating motors faster under load. Racing
+builds often lean into higher pitch for straight-line speed; freestyle builds
+frequently favor a lower pitch for smoother, more predictable power delivery
+through tricks.
+
+## Blade count
+
+Tri-blade and quad-blade props generally give smoother, more predictable
+thrust and better low-speed authority than bi-blades, at the cost of some
+efficiency and top speed. Freestyle pilots often prefer tri-blades for the
+extra control feel in slow, technical maneuvers.
+
+## Material
+
+Stiffer props (e.g. polycarbonate blends) transmit less flex-related noise
+into the gyro signal, which can mean a cleaner blackbox trace and less
+reliance on aggressive filtering — but they're also less forgiving on
+impact than more flexible props.
+
+## The tuning connection
+
+Changing prop pitch or blade count shifts the motor's noise frequency and
+the airframe's response characteristics — treat any prop swap as a reason to
+revisit dynamic notch range and re-check the tune, not just a cosmetic
+change.
