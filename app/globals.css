@@ -115,6 +115,43 @@ body {
   }
 }
 
+/* signature: drifting "signal motes" — an organic, insect-like flight
+   path used sparingly in the hero. Each mote gets its own amplitude/shape
+   so the swarm doesn't look like one repeated loop. */
+@keyframes mote-drift-a {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+  22% { transform: translate(38px, -46px) scale(1.15); opacity: 0.9; }
+  48% { transform: translate(8px, -18px) scale(0.85); opacity: 0.45; }
+  74% { transform: translate(52px, -58px) scale(1.05); opacity: 0.85; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+}
+@keyframes mote-drift-b {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  30% { transform: translate(-44px, -22px) scale(1.1); opacity: 0.8; }
+  55% { transform: translate(-14px, -54px) scale(0.9); opacity: 0.4; }
+  80% { transform: translate(-36px, -8px) scale(1); opacity: 0.7; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+}
+@keyframes mote-drift-c {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  18% { transform: translate(20px, 34px) scale(0.9); opacity: 0.7; }
+  46% { transform: translate(58px, 10px) scale(1.2); opacity: 0.9; }
+  70% { transform: translate(24px, -20px) scale(0.95); opacity: 0.5; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+}
+.mote {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(0.3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mote {
+    display: none;
+  }
+}
+
 ::selection {
   background: color-mix(in srgb, var(--color-phosphor) 35%, transparent);
   color: var(--color-carbon);

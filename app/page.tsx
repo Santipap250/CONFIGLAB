@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ScopeTrace from "@/components/ScopeTrace";
+import SignalMotes from "@/components/SignalMotes";
 import FacebookConnect from "@/components/FacebookConnect";
 
 const MODULES = [
@@ -63,13 +64,14 @@ export default function Home() {
       <section className="relative overflow-hidden border-b border-[color:var(--color-carbon-line)]">
         <div className="bg-lab-grid pointer-events-none absolute inset-0" />
         <ScopeTrace />
+        <SignalMotes />
         <div className="relative mx-auto max-w-6xl px-5 pb-24 pt-28 md:pt-36">
           <p className="font-[family-name:var(--font-mono)] text-[12px] uppercase tracking-[0.3em] text-[color:var(--color-phosphor)]">
             FPV Analyzer Lab
           </p>
           <h1 className="mt-5 max-w-3xl font-[family-name:var(--font-display)] text-4xl font-semibold leading-[1.08] text-[color:var(--color-paper)] text-glow md:text-6xl">
-            Tune your quad like you read its blackbox —
-            <span className="text-[color:var(--color-phosphor)]"> precisely.</span>
+            ทุกบทความ ทุกการตั้งค่า ทุกคำอธิบาย
+            <span className="text-[color:var(--color-phosphor)]"> เพื่อให้คุณเข้าใจ FPV อย่างแท้จริง</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-[color:var(--color-ash)] md:text-lg">
             OBIXCONFIG LAB is a reference lab for Betaflight configuration and
