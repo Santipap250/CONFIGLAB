@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ============================================================
+   OBIXCONFIG LAB — Design Tokens
+   Concept: telemetry / oscilloscope analyzer aesthetic.
+   Not a copy of OBIXCONFIG FPV's neon-HUD look — this is a
+   "signal lab" reading: carbon panel + phosphor trace + amber
+   warning channel, like a blackbox scope readout.
+   ============================================================ */
+
+:root {
+  --color-carbon: #0a0d10;        /* base background */
+  --color-carbon-raised: #12171b; /* panel / card surface */
+  --color-carbon-line: #1e262b;   /* hairlines, grid */
+  --color-phosphor: #4ce0d2;      /* primary trace / accent (cyan-teal) */
+  --color-phosphor-dim: #2b8f86;
+  --color-signal-amber: #ff8a3d;  /* secondary / warning accent */
+  --color-paper: #e7eef0;         /* primary text */
+  --color-ash: #8a98a0;           /* muted text */
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-carbon: var(--color-carbon);
+  --color-carbon-raised: var(--color-carbon-raised);
+  --color-carbon-line: var(--color-carbon-line);
+  --color-phosphor: var(--color-phosphor);
+  --color-phosphor-dim: var(--color-phosphor-dim);
+  --color-signal-amber: var(--color-signal-amber);
+  --color-paper: var(--color-paper);
+  --color-ash: var(--color-ash);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+  --font-body: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-carbon);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* subtle carbon-fiber grid texture, not a stock noise png */
+.bg-lab-grid {
+  background-image:
+    linear-gradient(var(--color-carbon-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-carbon-line) 1px, transparent 1px);
+  background-size: 42px 42px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+}
+
+.text-glow {
+  text-shadow: 0 0 24px color-mix(in srgb, var(--color-phosphor) 55%, transparent);
+}
+
+/* signature: signal-trace section divider (a graticule rule, not a plain <hr>) */
+.signal-rule {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-carbon-line) 15%,
+    var(--color-carbon-line) 85%,
+    transparent
+  );
+}
+.signal-rule::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  width: 6px;
+  height: 7px;
+  background: var(--color-phosphor);
+  box-shadow: 0 0 10px var(--color-phosphor);
+  transform: translateX(-50%);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-phosphor) 35%, transparent);
+  color: var(--color-carbon);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-phosphor);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
