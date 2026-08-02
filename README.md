@@ -107,6 +107,21 @@ this exact class of problem (always-on hero canvas). I can't run this on a
 physical phone from here — worth a quick spot-check with Chrome DevTools'
 mobile CPU/network throttling, or an actual device, before you call it done.
 
+## OG image weight optimization
+Started at 86.6KB. Two passes:
+1. Removed `textShadow`/`boxShadow` glow effects from the OG image JSX —
+   blur/glow is the single biggest cost for PNG size (soft gradients defeat
+   lossless compression). → **71.6KB**
+2. Added `scripts/optimize-og-image.mjs`, wired as `postbuild` in
+   `package.json` — automatically palette-quantizes the generated PNG with
+   `sharp` (`{ palette: true, quality: 85 }`, pngquant-equivalent, no
+   system binary needed so it works on Vercel's build image) after every
+   `npm run build`. → **~18.6KB final (-73% from the original)**
+
+No manual step required — this runs automatically every time you build or
+deploy. The script only overwrites the file if the compressed version is
+actually smaller, and never fails the build if something goes wrong with it.
+
 ## Commands
 ```
 npm install
