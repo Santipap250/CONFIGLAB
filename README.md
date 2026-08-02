@@ -164,6 +164,24 @@ actually smaller, and never fails the build if something goes wrong with it.
   own brand mark isn't in lucide's current icon set, so that one is a
   small hand-written inline SVG instead)
 
+## First content sourced from the Facebook page
+- `content/articles/advanced-tuning-ep1-what-is-noise.mdx` — Thai-language
+  article adapted from the "Advanced Tuning EP1: Noise" post on the
+  project's Facebook page, cross-linked to the *Understanding Gyro &
+  D-term Filters* Knowledge entry
+- **Language decision (per your call):** kept in Thai as-is rather than
+  translated, since the rest of the site is English — the site is now
+  intentionally mixed-language until proper i18n is built. Nothing extra
+  was built for this yet (no locale routing/switcher) — just noting it as
+  a known, deliberate state, not an oversight.
+- `app/about/page.tsx` — added a "Where the knowledge comes from" section
+  linking back to the source Facebook page
+
+**When you're ready to send more FB posts**, paste the text (not just a
+link — Facebook blocks automated fetching) and say which EP/topic it is;
+I'll slot it into Knowledge Hub, Articles, CLI Library, or Troubleshooting
+depending on what fits.
+
 ## Commands
 ```
 npm install
