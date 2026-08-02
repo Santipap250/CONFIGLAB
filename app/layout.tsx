@@ -13,9 +13,30 @@ import Footer from "@/components/Footer";
 import HudFrame from "@/components/HudFrame";
 
 export const metadata: Metadata = {
-  title: "OBIXCONFIG LAB — FPV Tuning & Betaflight Reference",
+  metadataBase: new URL("https://obixconfig-lab.vercel.app"),
+  title: {
+    default: "OBIXCONFIG LAB — FPV Tuning & Betaflight Reference",
+    template: "%s",
+  },
   description:
     "A signal-grade reference lab for FPV drone tuning, Betaflight CLI, troubleshooting, and configuration knowledge.",
+  openGraph: {
+    title: "OBIXCONFIG LAB — FPV Tuning & Betaflight Reference",
+    description:
+      "A signal-grade reference lab for FPV drone tuning, Betaflight CLI, troubleshooting, and configuration knowledge.",
+    type: "website",
+    siteName: "OBIXCONFIG LAB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OBIXCONFIG LAB — FPV Tuning & Betaflight Reference",
+    description:
+      "A signal-grade reference lab for FPV drone tuning, Betaflight CLI, troubleshooting, and configuration knowledge.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
