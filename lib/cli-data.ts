@@ -170,4 +170,67 @@ export const CLI_COMMANDS: CliCommand[] = [
     description:
       "Per-cell voltage (in centivolts) below which the FC treats the battery as critically low and can trigger warnings or a failsafe response.",
   },
+  {
+    command: "gyro_lpf2_static_hz",
+    category: "Filters",
+    type: "uint16",
+    default: "500",
+    range: "0–1000",
+    description:
+      "Second-stage gyro low-pass filter, applied after gyro_lpf1. Usually left higher than LPF1 — it's a light cleanup pass rather than the primary noise-removal stage.",
+  },
+  {
+    command: "tpa_rate",
+    category: "PID",
+    type: "uint8",
+    default: "65",
+    range: "0–100",
+    description:
+      "Throttle PID Attenuation — how much P and D are reduced at full throttle, as a percentage. Fixes oscillation that only appears on hard punch-outs or wide-open throttle.",
+  },
+  {
+    command: "tpa_breakpoint",
+    category: "PID",
+    type: "uint16",
+    default: "1250",
+    range: "1000–2000",
+    description:
+      "Raw throttle value where TPA attenuation begins. Below this point PID gains run at their full configured value; above it they taper per tpa_rate.",
+  },
+  {
+    command: "anti_gravity_gain",
+    category: "PID",
+    type: "uint16",
+    default: "80",
+    range: "0–250",
+    description:
+      "Temporarily boosts I-term during fast throttle changes to counter the sag/surge a quad feels on sudden throttle input — most noticeable on punch-outs and quick throttle chops.",
+  },
+  {
+    command: "rc_smoothing_auto_factor",
+    category: "Rates",
+    type: "uint8",
+    default: "30",
+    range: "1–50",
+    description:
+      "Controls how aggressively RC input smoothing filters incoming stick data. Higher values smooth a noisy or low-resolution link at the cost of added input latency.",
+  },
+  {
+    command: "motor_output_limit",
+    category: "Motor/ESC",
+    type: "uint8",
+    default: "100",
+    range: "1–100",
+    description:
+      "Caps maximum motor output as a percentage, independent of throttle position. Useful for break-in periods on new motors or protecting an underpowered/overheating setup.",
+  },
+  {
+    command: "small_angle",
+    category: "PID",
+    type: "uint8",
+    default: "180",
+    range: "0–180",
+    description:
+      "Maximum tilt angle, in degrees, the FC will still allow arming at. Set to 180 to disable the check entirely; lower values block arming if the craft is tilted past that angle.",
+  },
 ];

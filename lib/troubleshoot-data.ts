@@ -127,4 +127,49 @@ export const TROUBLESHOOT: TroubleshootEntry[] = [
     fix: "Raise dshot_idle_value slightly and confirm the ESC firmware supports the configured DSHOT rate before assuming it's a tuning issue.",
     relatedKnowledge: "motor-esc-basics",
   },
+  {
+    id: "tips-over-on-takeoff",
+    symptom: "Quad tips over immediately on takeoff",
+    category: "General",
+    causes: [
+      "One or more motors spinning the wrong direction",
+      "Props mounted in the wrong rotation direction",
+      "Throttle stick not centered / trimmed correctly before arming",
+    ],
+    fix: "With props off, verify each motor's spin direction against the configurator's motor layout before ever testing with props on again.",
+  },
+  {
+    id: "osd-garbled",
+    symptom: "OSD elements are garbled, flickering, or missing",
+    category: "General",
+    causes: [
+      "OSD/VTX voltage or wiring issue",
+      "Wrong OSD video system setting (PAL vs NTSC) for the camera",
+      "SPI/serial contention with another peripheral on the same resource",
+    ],
+    fix: "Confirm the video system setting matches your camera output first — it's the most common single cause of a garbled or partially-missing OSD.",
+  },
+  {
+    id: "punchout-sluggish",
+    symptom: "Quad feels sluggish or flat on full-throttle punch-outs",
+    category: "Power / ESC",
+    causes: [
+      "motor_output_limit set below 100%",
+      "Battery voltage sagging heavily under load",
+      "TPA attenuating PID gains too aggressively at high throttle",
+    ],
+    fix: "Check motor_output_limit and blackbox vbat sag first — both look like a 'weak' punch-out but aren't PID problems at all.",
+  },
+  {
+    id: "vibration-after-crash",
+    symptom: "Noticeably more vibration or heat after a crash and repair",
+    category: "Oscillation",
+    causes: [
+      "A bent prop or motor shaft from the impact",
+      "A motor screw not properly re-torqued during the repair",
+      "A hairline crack in the frame introducing new flex",
+    ],
+    fix: "Treat any post-crash vibration increase as a hardware issue first — re-check props, motor mounting, and frame integrity before assuming the tune needs revisiting.",
+    relatedKnowledge: "gyro-dterm-filters",
+  },
 ];
