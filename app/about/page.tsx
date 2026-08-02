@@ -47,6 +47,20 @@ export default function AboutPage() {
           <a href="/changelog">Changelog</a> for what&apos;s shipped so far,
           and the project repository for what&apos;s next.
         </p>
+
+        <h2>Where the knowledge comes from</h2>
+        <p>
+          Much of the core tuning knowledge on this site is adapted from the{" "}
+          <a
+            href="https://www.facebook.com/banmysanti"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            OBIX Config Lab Facebook page
+          </a>{" "}
+          — the original source for this project&apos;s tuning series,
+          before it was structured into a searchable reference here.
+        </p>
       </div>
     </div>
   );
