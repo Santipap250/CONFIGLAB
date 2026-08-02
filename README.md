@@ -80,8 +80,32 @@ placeholder (`https://obixconfig-lab.vercel.app`) — update both to the real
 production domain once you deploy.
 
 ## Status: all sitemap pages from the original brief are live
-25 routes total, all statically pre-rendered. Every route from the Phase 0
-information architecture now resolves — nothing left returning 404.
+25 routes total (26 including the OG image route), all statically
+pre-rendered. Every route from the Phase 0 information architecture now
+resolves — nothing left returning 404.
+
+## Post-launch: OG image + mobile perf pass
+- `app/opengraph-image.tsx` — code-generated 1200×630 social share image
+  (`next/og` `ImageResponse`), on-brand with the same tokens/waveform motif
+  as the hero. Auto-applies to Open Graph + Twitter card for every page
+  that doesn't set its own. Fonts are bundled locally under `assets/fonts/`
+  (Space Grotesk 700/500, IBM Plex Mono 500) rather than fetched at
+  render time.
+- `components/ScopeTrace.tsx` — mobile/battery hardening:
+  - Pauses entirely when the hero scrolls off-screen (`IntersectionObserver`)
+    or the tab is backgrounded (`visibilitychange`) — was previously running
+    forever regardless of visibility
+  - Throttled from a full 60fps RAF loop to ~30fps — halves draw/composite
+    cost with no visible difference for a slow ambient waveform
+  - DPR cap tightened to 1.5 on viewports under 768px (was 2 everywhere) —
+    fewer pixels to fill on phones
+  - `prefers-reduced-motion` now renders one static frame and fully stops
+    the loop, instead of just skipping the next RAF call
+
+**Note on "mobile QA":** these are the standard, well-established fixes for
+this exact class of problem (always-on hero canvas). I can't run this on a
+physical phone from here — worth a quick spot-check with Chrome DevTools'
+mobile CPU/network throttling, or an actual device, before you call it done.
 
 ## Commands
 ```
