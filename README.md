@@ -165,10 +165,10 @@ actually smaller, and never fails the build if something goes wrong with it.
   small hand-written inline SVG instead)
 
 ## First content sourced from the Facebook page
-- `content/articles/advanced-tuning-ep1-what-is-noise.mdx` — Thai-language
-  article adapted from the "Advanced Tuning EP1: Noise" post on the
-  project's Facebook page, cross-linked to the *Understanding Gyro &
-  D-term Filters* Knowledge entry
+- `content/knowledge/advanced-tuning-ep1-what-is-noise.mdx` — Thai-language
+  Knowledge Hub entry adapted from the "Advanced Tuning EP1: Noise" post,
+  filed under a new **"Advanced Tuning"** category (your call — moved here
+  from Articles), cross-linked to *Understanding Gyro & D-term Filters*
 - **Language decision (per your call):** kept in Thai as-is rather than
   translated, since the rest of the site is English — the site is now
   intentionally mixed-language until proper i18n is built. Nothing extra
@@ -179,8 +179,8 @@ actually smaller, and never fails the build if something goes wrong with it.
 
 **When you're ready to send more FB posts**, paste the text (not just a
 link — Facebook blocks automated fetching) and say which EP/topic it is;
-I'll slot it into Knowledge Hub, Articles, CLI Library, or Troubleshooting
-depending on what fits.
+future "Advanced Tuning" EPs can slot into this same category by giving
+them the next `order` number.
 
 ## Commands
 ```
