@@ -1,0 +1,38 @@
+---
+title: "Understanding Blackbox Step Response Plots"
+description: "What overshoot, settling time, and a step-response curve actually tell you about a tune."
+date: "2026-03-18"
+tags: ["blackbox", "tuning"]
+---
+
+A step-response plot answers one specific question per axis: when the
+stick makes a sudden, sharp move, how does the actual rotation rate chase
+the commanded one? It's a more direct read on tuning quality than eyeballing
+raw gyro traces.
+
+## Reading the curve
+
+A well-tuned axis rises quickly to the commanded rate, settles with little
+or no overshoot, and holds flat. Excess overshoot (the curve spiking past
+the target before settling back) generally points to too much P relative to
+D; slow, sluggish rise toward the target points to too little P.
+
+## Ringing after the step
+
+A curve that oscillates repeatedly around the target before settling —
+"ringing" — is one of the clearest blackbox signatures of D-term set too
+high for the current filter quality, and is often mistaken for a P problem
+because it also looks like general oscillation.
+
+## Comparing across axes
+
+Roll and pitch step responses often differ meaningfully on the same
+airframe, since they see different arm lengths, mass distribution, and prop
+wash exposure. Judge each axis's step response independently rather than
+assuming one setting should be identical across all three.
+
+## When it doesn't line up with "flight feel"
+
+A close-to-ideal step response and a quad that still feels off in the air
+usually point away from PID and toward filtering, mechanical issues, or
+rates shaping — see the Tuning Guide for the intended order of operations.

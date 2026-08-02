@@ -1,0 +1,37 @@
+---
+title: "Setting Up Bidirectional DSHOT & RPM Filtering, Step by Step"
+description: "A practical checklist for moving from a KV-estimated dynamic notch to real RPM filtering."
+date: "2026-02-20"
+tags: ["filters", "esc", "setup"]
+---
+
+RPM filtering is one of the highest-value upgrades available on a modern
+build, but it depends on a few settings lining up correctly — miss one and
+it silently falls back to less accurate filtering without an obvious error.
+
+## Checklist
+
+1. Confirm your ESCs and their firmware actually support bidirectional
+   DSHOT telemetry — not every ESC/firmware combination does, even on
+   otherwise modern hardware.
+2. Set the DSHOT protocol to at least DSHOT300 — the telemetry needs
+   enough bandwidth to ride along reliably.
+3. Enable bidirectional DSHOT in the Betaflight Configurator's motor tab.
+4. Set the correct motor pole count — check the motor's spec sheet rather
+   than guessing, since this directly determines the RPM-to-frequency
+   conversion.
+5. Confirm in the Motors tab that RPM telemetry values actually appear and
+   move with throttle before trusting the setup in flight.
+
+## Verifying it worked
+
+Fly a short test and pull the blackbox log. A properly working RPM filter
+setup shows a clean gyro trace with noise removed precisely around the
+known motor-order harmonics, rather than the broader, blunter notches a
+KV-estimated dynamic notch produces.
+
+## If it doesn't seem to help
+
+Double-check the pole count first — a wrong pole count is the most common
+reason RPM filtering underperforms, since every notch placement downstream
+depends on it being correct.
