@@ -20,9 +20,13 @@ export default function ScopeTrace() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+    // Cap DPR harder on small/mobile viewports — fill-rate cost scales with
+    // pixel count, and a full-bleed hero canvas on a tall phone screen is
+    // the worst case for GPU/battery draw.
+    const isSmallViewport = window.innerWidth < 768;
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let dpr = Math.min(window.devicePixelRatio || 1, isSmallViewport ? 1.5 : 2);
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -41,10 +45,40 @@ export default function ScopeTrace() {
       { color: "#ff8a3d", amp: 0.06, freq: 3.1, speed: 0.9, phase: 4, alpha: 0.35 },
     ];
 
+    // Pause entirely when the hero isn't visible (scrolled away) or the tab
+    // is backgrounded — the single biggest mobile battery win, since the
+    // animation otherwise keeps running indefinitely off-screen.
+    let isVisible = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
+    let isTabVisible = document.visibilityState === "visible";
+    const onVisibilityChange = () => {
+      isTabVisible = document.visibilityState === "visible";
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    // Throttle to ~30fps instead of a full 60fps RAF loop — halves the
+    // draw/composite work with no visible difference for a slow ambient
+    // waveform, which matters more on mobile GPUs than desktop.
+    const targetFrameMs = 1000 / 30;
+    let lastFrameTime = 0;
+
     let raf = 0;
     let t = 0;
 
-    const draw = () => {
+    const draw = (now: number) => {
+      raf = requestAnimationFrame(draw);
+
+      if (!isVisible || !isTabVisible) return;
+      if (now - lastFrameTime < targetFrameMs) return;
+      lastFrameTime = now;
+
       ctx.clearRect(0, 0, width, height);
       const midY = height * 0.55;
 
@@ -69,13 +103,20 @@ export default function ScopeTrace() {
       ctx.globalAlpha = 1;
 
       t += 0.016;
-      if (!reduceMotion) raf = requestAnimationFrame(draw);
     };
 
-    draw();
+    if (!reduceMotion) {
+      raf = requestAnimationFrame(draw);
+    } else {
+      // Draw a single static frame and stop — no loop at all.
+      draw(0);
+      cancelAnimationFrame(raf);
+    }
 
     return () => {
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      io.disconnect();
       cancelAnimationFrame(raf);
     };
   }, []);
