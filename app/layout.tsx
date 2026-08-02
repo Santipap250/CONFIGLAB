@@ -48,8 +48,14 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <HudFrame />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-sm focus:bg-[color:var(--color-phosphor)] focus:px-4 focus:py-2 focus:font-[family-name:var(--font-mono)] focus:text-[13px] focus:text-[color:var(--color-carbon)]"
+        >
+          Skip to content
+        </a>
         <Nav />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>
