@@ -99,7 +99,6 @@ export default async function Image() {
                 height: 14,
                 borderRadius: 999,
                 background: PHOSPHOR,
-                boxShadow: `0 0 24px ${PHOSPHOR}`,
                 display: "flex",
               }}
             />
@@ -138,7 +137,6 @@ export default async function Image() {
               fontSize: 96,
               lineHeight: 1.02,
               color: PHOSPHOR,
-              textShadow: `0 0 40px ${PHOSPHOR}`,
               marginTop: -6,
             }}
           >
