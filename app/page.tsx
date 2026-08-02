@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ScopeTrace from "@/components/ScopeTrace";
+import FacebookConnect from "@/components/FacebookConnect";
 
 const MODULES = [
   {
@@ -143,6 +144,21 @@ export default function Home() {
               </p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <div className="signal-rule mx-auto max-w-6xl" />
+
+      {/* Stay connected */}
+      <section className="mx-auto max-w-6xl px-5 py-20 text-center">
+        <p className="font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.25em] text-[color:var(--color-phosphor-dim)]">
+          Stay in the loop
+        </p>
+        <h2 className="mx-auto mt-3 max-w-md font-[family-name:var(--font-display)] text-2xl font-semibold text-[color:var(--color-paper)] md:text-3xl">
+          Updates, community discussion, and behind-the-scenes builds
+        </h2>
+        <div className="mt-9 flex justify-center">
+          <FacebookConnect />
         </div>
       </section>
     </div>
