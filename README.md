@@ -46,9 +46,22 @@ were skipped for now — commands expand inline via `<details>` instead, which
 covers the same "search + see defaults/ranges" job with less surface area.
 Can add dedicated routes later if you want shareable per-command URLs.
 
+## Phase 4 (this delivery)
+- `/tools` — index of 3 instruments
+- `/tools/battery` — flight-time estimate + continuous-current headroom
+  from capacity/C-rating/cell count, with a warning state when average draw
+  is close to the pack's continuous rating
+- `/tools/rates` — SVG rate-curve visualizer (RC Rate / Super Rate / Expo),
+  clearly labeled as an approximation for visualizing feel, not a firmware
+  replica
+- `/tools/filters` — dynamic notch range helper: estimates motor RPM from
+  KV + cell count and suggests a `dyn_notch_min_hz` / `max_hz` starting
+  range, cross-linked to the CLI Library and the filters Knowledge article
+- All three are self-contained client components (`BatteryCalculator`,
+  `RatesVisualizer`, `FilterRangeHelper`) — no new dependencies
+
 ## Not yet built (routes return 404 until their phase)
-`/tuning`, `/tools`, `/about`, `/faq`, `/changelog`, `/resources` —
-planned for Phase 4–5.
+`/tuning`, `/about`, `/faq`, `/changelog`, `/resources` — planned for Phase 5.
 
 ## Commands
 ```
