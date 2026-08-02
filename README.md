@@ -107,6 +107,30 @@ this exact class of problem (always-on hero canvas). I can't run this on a
 physical phone from here — worth a quick spot-check with Chrome DevTools'
 mobile CPU/network throttling, or an actual device, before you call it done.
 
+## Content expansion
+- Knowledge Hub: 4 → **8** entries. Added: RPM Filtering Explained,
+  Throttle PID Attenuation (TPA), Flight Modes (Angle/Horizon/Acro),
+  Antenna Basics for FPV Video & Control Links
+- Articles: 2 → **5**. Added: Setting Up Bidirectional DSHOT & RPM
+  Filtering step-by-step, A Beginner's First Betaflight Setup Checklist,
+  Understanding Blackbox Step Response Plots
+- CLI Library: 18 → **25** commands. Added: gyro_lpf2_static_hz, tpa_rate,
+  tpa_breakpoint, anti_gravity_gain, rc_smoothing_auto_factor,
+  motor_output_limit, small_angle
+- Troubleshooting Center: 10 → **15** entries. Added: tips over on takeoff,
+  garbled OSD, sluggish punch-outs, vibration increase after a crash repair
+
+All additions went through the existing system — new `.mdx` files for
+Knowledge/Articles, new objects appended to the `CLI_COMMANDS` /
+`TROUBLESHOOT` arrays. No page code was touched.
+
+## Favicon / icons
+- `app/icon.png` (32×32) and `app/apple-icon.png` (180×180) — a small
+  on-brand "scope reticle" mark (ring + center dot + tick marks, phosphor
+  cyan on carbon), generated from a single SVG source and rasterized with
+  `sharp`. Replaces the default Next.js favicon that was still in place
+  from scaffolding (`app/favicon.ico`, now removed).
+
 ## OG image weight optimization
 Started at 86.6KB. Two passes:
 1. Removed `textShadow`/`boxShadow` glow effects from the OG image JSX —
