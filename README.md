@@ -146,6 +146,24 @@ No manual step required — this runs automatically every time you build or
 deploy. The script only overwrites the file if the compressed version is
 actually smaller, and never fails the build if something goes wrong with it.
 
+## Facebook Page connect button
+- `components/FacebookConnect.tsx` — animated pill button on the Home page
+  ("Stay in the loop" section), linking to
+  https://www.facebook.com/banmysanti
+- Two staggered pulsing rings behind the icon (pure CSS `@keyframes
+  pulse-ring` in `globals.css`, no JS/animation library) — reads as a
+  signal ping, on-brand with the rest of the site rather than a generic
+  social badge
+- Icon uses actual Facebook blue (`#1877F2`) on a small badge for instant
+  recognizability, while the button shell stays in the site's carbon/
+  phosphor palette
+- Hover: border and glow shift to phosphor, icon scales up slightly, arrow
+  nudges — all CSS transitions, no JS
+- Respects `prefers-reduced-motion` (rings simply don't render/animate)
+- `lucide-react` was added as a dependency for the arrow icon (Facebook's
+  own brand mark isn't in lucide's current icon set, so that one is a
+  small hand-written inline SVG instead)
+
 ## Commands
 ```
 npm install
