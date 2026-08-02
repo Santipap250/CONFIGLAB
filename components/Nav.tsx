@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { usePathname } from "next/navigation";
+import SiteSearch from "@/components/SiteSearch";
+import type { SearchItem } from "@/lib/search-index";
 
 const LINKS = [
   { href: "/knowledge", label: "Knowledge" },
@@ -13,7 +15,7 @@ const LINKS = [
   { href: "/articles", label: "Articles" },
 ];
 
-export default function Nav() {
+export default function Nav({ searchIndex }: { searchIndex: SearchItem[] }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const menuId = useId();
@@ -58,6 +60,8 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <SiteSearch index={searchIndex} />
+
           <Link
             href="/faq"
             className="hidden rounded-sm border border-[color:var(--color-phosphor-dim)] px-3 py-1.5 font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-phosphor)] transition-colors hover:bg-[color:var(--color-phosphor)] hover:text-[color:var(--color-carbon)] sm:inline-block"
