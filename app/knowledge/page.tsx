@@ -36,6 +36,7 @@ export default function KnowledgePage() {
                 <Link
                   key={e.slug}
                   href={`/knowledge/${e.slug}`}
+                  lang={e.lang}
                   className="group rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] p-6 transition-colors hover:border-[color:var(--color-phosphor-dim)]"
                 >
                   <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold text-[color:var(--color-paper)]">
