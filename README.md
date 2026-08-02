@@ -182,6 +182,20 @@ link — Facebook blocks automated fetching) and say which EP/topic it is;
 future "Advanced Tuning" EPs can slot into this same category by giving
 them the next `order` number.
 
+## Hero headline + mote swarm animation
+- Home hero headline changed to the requested Thai copy: "ทุกบทความ
+  ทุกการตั้งค่า ทุกคำอธิบาย เพื่อให้คุณเข้าใจ FPV อย่างแท้จริง"
+  (was the English "Tune your quad like you read its blackbox — precisely.")
+- `components/SignalMotes.tsx` — 8 small glowing particles drifting through
+  the hero with an organic, insect-like flight path (3 different curved
+  keyframe paths in `globals.css`, randomized size/color/speed/delay per
+  mote) — reads as "fireflies" per your request, styled in the site's own
+  phosphor/amber palette rather than literal insect artwork, so it stays
+  on-brand
+- Pure CSS animation (`transform` + `opacity` only, no JS/canvas loop) —
+  cheap on mobile, and hidden entirely under `prefers-reduced-motion`
+  the same way `ScopeTrace` is
+
 ## Commands
 ```
 npm install
