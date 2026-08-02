@@ -1,0 +1,36 @@
+---
+title: "RPM Filtering Explained"
+description: "How bidirectional DSHOT lets the FC track real motor noise per-motor, and why it beats a KV estimate."
+category: "Filters"
+order: 5
+---
+
+Dynamic notch filters guess where motor noise sits based on a KV/prop
+estimate. RPM filtering removes the guesswork entirely by reading the
+motor's *actual* electrical RPM back from the ESC.
+
+## How it works
+
+With bidirectional DSHOT enabled, each ESC reports real-time RPM telemetry
+back to the flight controller over the same signal wire used to command
+throttle. Betaflight uses that RPM, combined with the motor's known pole
+count, to place notch filters exactly on the true noise frequency — per
+motor, continuously, as RPM changes through a flight.
+
+## Why this is more precise than dynamic notch alone
+
+A KV-based dynamic notch estimate assumes every motor spins at roughly the
+same speed under the same throttle — RPM filtering doesn't need that
+assumption, since it's measuring the real thing. This matters most on
+quads with mismatched motors, worn bearings, or asymmetric thrust.
+
+## What it needs
+
+- ESCs and firmware that support bidirectional DSHOT telemetry
+- The correct motor pole count set in Betaflight — an easy value to get
+  wrong, and one that quietly makes RPM filtering less accurate if it is
+- A DSHOT protocol fast enough to carry the telemetry reliably (DSHOT300+
+  is typical for RPM filtering setups)
+
+See <em>Motor & ESC Basics</em> in this Hub for how DSHOT protocol choice
+factors in.

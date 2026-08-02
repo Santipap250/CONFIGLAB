@@ -1,0 +1,32 @@
+---
+title: "Throttle PID Attenuation (TPA)"
+description: "Why a tune that feels great at half throttle can turn twitchy at full send — and how TPA fixes it."
+category: "Tuning"
+order: 6
+---
+
+PID gains that feel perfectly damped at moderate throttle often start
+oscillating at full throttle, because motor thrust and prop loading don't
+scale linearly with stick input. TPA reduces PID gains as throttle rises
+past a set point, to compensate.
+
+## The two settings
+
+`tpa_rate` sets how much the PID gains are reduced at full throttle,
+expressed as a percentage. `tpa_breakpoint` sets the throttle value (in raw
+PWM units, typically 1000–2000) where attenuation starts kicking in — below
+that point, PID gains are unaffected.
+
+## Reading the symptom
+
+If a quad is clean and stable through most of the throttle range but starts
+oscillating specifically on hard punch-outs or at wide-open throttle, that's
+the classic TPA symptom — not a P or D problem at the gains you're already
+running.
+
+## Tuning approach
+
+Get the base tune dialed in around mid-throttle first. Only then introduce
+TPA, raising `tpa_rate` gradually while testing full-throttle punch-outs,
+rather than trying to solve the same problem by lowering P or D globally
+and losing sharpness everywhere else.
