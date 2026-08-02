@@ -60,8 +60,28 @@ Can add dedicated routes later if you want shareable per-command URLs.
 - All three are self-contained client components (`BatteryCalculator`,
   `RatesVisualizer`, `FilterRangeHelper`) — no new dependencies
 
-## Not yet built (routes return 404 until their phase)
-`/tuning`, `/about`, `/faq`, `/changelog`, `/resources` — planned for Phase 5.
+## Phase 5 (this delivery) — launch-ready
+- `/about` — mission / why OBIXCONFIG LAB
+- `/tuning` — 6-step ordered tuning path, cross-linked to Knowledge Hub,
+  CLI Library, Tools, and Troubleshooting Center
+- `/faq` — accordion FAQ + GitHub-repo contact channel (real link, no
+  invented contact details)
+- `/changelog` — genuine phase-by-phase log of this project's actual build
+  history (Phase 1–4)
+- `/resources` — links to the official Betaflight repo, Betaflight
+  Configurator, and this project's own repo
+- SEO: `metadataBase`, Open Graph + Twitter card defaults, `robots.txt`
+  (`app/robots.ts`), and a dynamic `sitemap.xml` (`app/sitemap.ts`) that
+  includes every static route plus all current Knowledge/Article MDX slugs
+  automatically — new content appears in the sitemap with no manual edits
+
+**Before deploying:** `metadataBase` and the sitemap/robots `BASE_URL` are
+placeholder (`https://obixconfig-lab.vercel.app`) — update both to the real
+production domain once you deploy.
+
+## Status: all sitemap pages from the original brief are live
+25 routes total, all statically pre-rendered. Every route from the Phase 0
+information architecture now resolves — nothing left returning 404.
 
 ## Commands
 ```
