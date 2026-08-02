@@ -11,6 +11,7 @@ export type KnowledgeEntry = {
   description: string;
   category: string;
   order?: number;
+  lang?: string;
 };
 
 export type ArticleEntry = {
