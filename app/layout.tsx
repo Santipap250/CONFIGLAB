@@ -11,6 +11,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import HudFrame from "@/components/HudFrame";
+import { getSearchIndex } from "@/lib/search-index";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://labfpv.vercel.app"),
@@ -54,7 +55,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Nav />
+        <Nav searchIndex={getSearchIndex()} />
         <main id="main-content">{children}</main>
         <Footer />
       </body>
