@@ -13,6 +13,12 @@ export type SearchItem = {
 const TOOLS: SearchItem[] = [
   {
     type: "Tool",
+    title: "CLI Config Analyzer",
+    description: "Paste your diff all output and get an instant analysis of what's customized, risky, or unrecognized.",
+    href: "/analyzer",
+  },
+  {
+    type: "Tool",
     title: "Battery & Flight Time",
     description: "Estimate flight time and continuous-current headroom from capacity, C-rating, and cell count.",
     href: "/tools/battery",

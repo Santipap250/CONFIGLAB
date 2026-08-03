@@ -234,3 +234,32 @@ export const CLI_COMMANDS: CliCommand[] = [
       "Maximum tilt angle, in degrees, the FC will still allow arming at. Set to 180 to disable the check entirely; lower values block arming if the craft is tilted past that angle.",
   },
 ];
+
+export function slugifyCommand(command: string): string {
+  return command
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Real Betaflight dumps set individual keys (p_roll, p_pitch, p_yaw...) but
+ * our reference groups related ones into a single entry ("p_pitch / p_roll
+ * / p_yaw") for readability. This builds a per-key lookup back to the
+ * parent entry, plus the matching positional default when the entry's
+ * `default` field is itself a "/"-separated list.
+ */
+export function buildCliLookup(): Map<string, { entry: CliCommand; defaultValue: string }> {
+  const map = new Map<string, { entry: CliCommand; defaultValue: string }>();
+  for (const entry of CLI_COMMANDS) {
+    const keys = entry.command.split("/").map((k) => k.trim());
+    const defaults = entry.default.split("/").map((d) => d.trim());
+    keys.forEach((key, i) => {
+      map.set(key.toLowerCase(), {
+        entry,
+        defaultValue: defaults.length === keys.length ? defaults[i] : entry.default,
+      });
+    });
+  }
+  return map;
+}
