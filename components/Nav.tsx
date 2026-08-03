@@ -7,6 +7,7 @@ import SiteSearch from "@/components/SiteSearch";
 import type { SearchItem } from "@/lib/search-index";
 
 const LINKS = [
+  { href: "/analyzer", label: "Config Analyzer" },
   { href: "/knowledge", label: "Knowledge" },
   { href: "/cli", label: "CLI Library" },
   { href: "/troubleshoot", label: "Troubleshoot" },

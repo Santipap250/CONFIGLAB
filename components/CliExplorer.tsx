@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CliCommand } from "@/lib/cli-data";
+import { slugifyCommand } from "@/lib/cli-data";
 
 export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
   const [query, setQuery] = useState("");
@@ -23,6 +24,20 @@ export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
       return matchesCategory && matchesQuery;
     });
   }, [commands, query, category]);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return;
+    // Give the list a tick to render before we look for the element.
+    const t = setTimeout(() => {
+      const el = document.getElementById(hash);
+      if (el instanceof HTMLDetailsElement) {
+        el.open = true;
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 50);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <div>
@@ -74,6 +89,7 @@ export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
         {filtered.map((c) => (
           <details
             key={c.command}
+            id={slugifyCommand(c.command)}
             className="group rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] open:border-[color:var(--color-phosphor-dim)]"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4">

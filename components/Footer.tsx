@@ -4,6 +4,7 @@ const COLUMNS = [
   {
     title: "Library",
     links: [
+      { href: "/analyzer", label: "Config Analyzer" },
       { href: "/knowledge", label: "Knowledge Hub" },
       { href: "/cli", label: "CLI Library" },
       { href: "/articles", label: "Articles" },
