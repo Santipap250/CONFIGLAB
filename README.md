@@ -278,6 +278,49 @@ zip) so you can check the X crop and background removal look right before
 you treat this as final — flag it if the X needs to be framed differently
 or if any edge fringing is visible.
 
+## 🚩 Flagship feature: CLI Config Analyzer
+The site's main differentiator — paste a Betaflight `diff all` / `dump`
+and get an instant, entirely client-side analysis. Nothing like this
+exists on any other Betaflight reference site.
+
+- `lib/cli-parser.ts` — parses `set key = value` lines (ignores comments,
+  mixer/aux/resource lines, anything else), then analyzes each against the
+  CLI Library data:
+  - **Flags** — out-of-range values (using each command's existing
+    `range` field), invalid enum values, and a handful of specific
+    high-value checks (low `dshot_idle_value`, `vbat_min_cell_voltage`
+    outside a sane band, `dyn_notch_min_hz` ≥ `max_hz`, capped
+    `motor_output_limit`)
+  - **Customized from default** — vs. the CLI Library's known default,
+    with a link straight to that command's entry
+  - **Unchanged from default** — collapsed by default, expandable
+  - **Not yet in our reference set** — anything parsed that isn't in our
+    25-command CLI Library yet, shown honestly rather than guessed at
+- `lib/cli-data.ts` — added `buildCliLookup()` / `slugifyCommand()` so
+  individual dump keys (e.g. `p_roll`) resolve back to grouped reference
+  entries (e.g. "p_pitch / p_roll / p_yaw") and their correct positional
+  default
+- `components/CliExplorer.tsx` — CLI Library entries now have stable
+  anchor IDs and auto-open/scroll when arriving via `#anchor` — so a flag
+  in the Analyzer links straight to the exact command, expanded, in the
+  CLI Library
+- `components/ConfigAnalyzer.tsx` — the UI: paste box, "Load example" for
+  a first-touch demo without needing your own dump handy, live summary
+  stats, sectioned results
+- Wired in everywhere: **primary hero CTA** on Home (replaced "Enter
+  Knowledge Hub" as the top action), first item in the header nav, first
+  column in Footer, in the search index, in the 404 page's recovery
+  links, and in `sitemap.xml`
+- Explicit privacy line in the UI ("nothing you paste is uploaded or
+  stored") — true, since there's no backend at all; everything runs in
+  the browser
+
+**Honest limitation:** the analyzer is only as good as the 25-command CLI
+Library behind it. A real `diff all` will contain far more settings than
+that — those show up honestly in "not yet in our reference set" rather
+than pretending to judge them. Growing the CLI Library directly grows
+what the Analyzer can catch.
+
 ## Commands
 ```
 npm install
