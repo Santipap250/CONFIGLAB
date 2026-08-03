@@ -6,6 +6,7 @@ const BASE_URL = "https://labfpv.vercel.app";
 const STATIC_ROUTES = [
   "",
   "/about",
+  "/analyzer",
   "/knowledge",
   "/cli",
   "/troubleshoot",

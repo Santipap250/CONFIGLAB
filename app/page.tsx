@@ -3,7 +3,16 @@ import ScopeTrace from "@/components/ScopeTrace";
 import SignalMotes from "@/components/SignalMotes";
 import FacebookConnect from "@/components/FacebookConnect";
 
-const MODULES = [
+type Module = { ch: string; title: string; desc: string; href: string; featured?: boolean };
+
+const MODULES: Module[] = [
+  {
+    ch: "FLAGSHIP",
+    title: "CLI Config Analyzer",
+    desc: "Paste your diff all — instantly see what's customized, what's risky, and what each setting actually does.",
+    href: "/analyzer",
+    featured: true,
+  },
   {
     ch: "CH1",
     title: "Knowledge Hub",
@@ -80,16 +89,16 @@ export default function Home() {
           </p>
           <div className="mt-9 flex flex-wrap gap-4">
             <Link
-              href="/knowledge"
-              className="rounded-sm bg-[color:var(--color-phosphor)] px-5 py-3 font-[family-name:var(--font-mono)] text-[13px] font-medium text-[color:var(--color-carbon)] transition-opacity hover:opacity-90"
+              href="/analyzer"
+              className="rounded-sm bg-[color:var(--color-signal-amber)] px-5 py-3 font-[family-name:var(--font-mono)] text-[13px] font-medium text-[color:var(--color-carbon)] transition-opacity hover:opacity-90"
             >
-              Enter Knowledge Hub
+              Analyze Your Config
             </Link>
             <Link
-              href="/cli"
+              href="/knowledge"
               className="rounded-sm border border-[color:var(--color-carbon-line)] px-5 py-3 font-[family-name:var(--font-mono)] text-[13px] text-[color:var(--color-paper)] transition-colors hover:border-[color:var(--color-phosphor-dim)]"
             >
-              Browse CLI Library
+              Enter Knowledge Hub
             </Link>
           </div>
         </div>
@@ -109,18 +118,30 @@ export default function Home() {
             <Link
               key={m.href}
               href={m.href}
-              className="group relative overflow-hidden rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] p-6 transition-colors hover:border-[color:var(--color-phosphor-dim)]"
+              className={`group relative overflow-hidden rounded-md border p-6 transition-colors ${
+                m.featured
+                  ? "border-[color:var(--color-signal-amber)] bg-[color:var(--color-carbon-raised)] shadow-[0_0_30px_-10px_var(--color-signal-amber)] sm:col-span-2 lg:col-span-3"
+                  : "border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] hover:border-[color:var(--color-phosphor-dim)]"
+              }`}
             >
-              <span className="font-[family-name:var(--font-mono)] text-[11px] tracking-[0.2em] text-[color:var(--color-phosphor)]">
+              <span
+                className={`font-[family-name:var(--font-mono)] text-[11px] tracking-[0.2em] ${
+                  m.featured ? "text-[color:var(--color-signal-amber)]" : "text-[color:var(--color-phosphor)]"
+                }`}
+              >
                 {m.ch}
               </span>
               <h3 className="mt-3 font-[family-name:var(--font-display)] text-lg font-semibold text-[color:var(--color-paper)]">
                 {m.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-ash)]">
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-[color:var(--color-ash)]">
                 {m.desc}
               </p>
-              <span className="mt-4 inline-block font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-phosphor)] opacity-0 transition-opacity group-hover:opacity-100">
+              <span
+                className={`mt-4 inline-block font-[family-name:var(--font-mono)] text-[12px] opacity-0 transition-opacity group-hover:opacity-100 ${
+                  m.featured ? "text-[color:var(--color-signal-amber)]" : "text-[color:var(--color-phosphor)]"
+                }`}
+              >
                 open →
               </span>
             </Link>

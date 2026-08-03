@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const REDISCOVER = [
+  { href: "/analyzer", label: "Config Analyzer" },
   { href: "/knowledge", label: "Knowledge Hub" },
   { href: "/cli", label: "CLI Library" },
   { href: "/troubleshoot", label: "Troubleshooting Center" },
-  { href: "/tools", label: "Tools & Calculators" },
 ];
 
 export const metadata = {
