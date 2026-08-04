@@ -1,0 +1,36 @@
+---
+title: "RPM Filtering อธิบายละเอียด"
+description: "Bidirectional DSHOT ทำให้ FC ติดตาม noise ของมอเตอร์จริงต่อตัวได้ยังไง และทำไมมันดีกว่าการประมาณจาก KV"
+category: "Filters"
+order: 5
+---
+
+Dynamic notch filter เดาตำแหน่งของ noise มอเตอร์จากการประมาณค่า KV/ใบพัด
+ส่วน RPM filtering ตัดการเดาออกไปทั้งหมด โดยอ่านค่า RPM ไฟฟ้า *จริง* ของ
+มอเตอร์กลับมาจาก ESC โดยตรง
+
+## ทำงานยังไง
+
+เมื่อเปิด bidirectional DSHOT แต่ละ ESC จะส่ง telemetry RPM แบบ real-time
+กลับไปหา flight controller ผ่านสายสัญญาณเส้นเดียวกับที่ใช้สั่งคันเร่ง
+Betaflight ใช้ค่า RPM นี้ ร่วมกับจำนวนขั้ว (pole) ของมอเตอร์ที่รู้อยู่แล้ว
+เพื่อวาง notch filter ให้ตรงกับความถี่ noise จริง — ต่อมอเตอร์แต่ละตัว
+แบบต่อเนื่องตลอดการบิน
+
+## ทำไมถึงแม่นยำกว่า dynamic notch เพียงอย่างเดียว
+
+การประมาณ dynamic notch จาก KV สมมติว่าทุกมอเตอร์หมุนด้วยความเร็วใกล้
+เคียงกันที่คันเร่งเดียวกัน — RPM filtering ไม่ต้องสมมติแบบนั้น เพราะมัน
+วัดของจริง เรื่องนี้สำคัญมากในลำที่มอเตอร์ไม่เหมือนกัน, ลูกปืนสึก หรือ
+แรงขับไม่สมมาตร
+
+## สิ่งที่ต้องมี
+
+- ESC และ firmware ที่รองรับ bidirectional DSHOT telemetry
+- ตั้งจำนวนขั้ว (pole count) ของมอเตอร์ให้ถูกต้องใน Betaflight — เป็นค่า
+  ที่ตั้งผิดได้ง่าย และถ้าผิดจะทำให้ RPM filtering แม่นยำน้อยลงแบบเงียบๆ
+- Protocol DSHOT ที่เร็วพอจะส่ง telemetry ได้เสถียร (โดยทั่วไปใช้
+  DSHOT300 ขึ้นไปสำหรับ RPM filtering)
+
+ดู <em>Motor &amp; ESC Basics</em> ใน Hub นี้ เพื่อดูว่าการเลือก protocol
+DSHOT มีผลยังไง
