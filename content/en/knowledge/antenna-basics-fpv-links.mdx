@@ -1,0 +1,33 @@
+---
+title: "Antenna Basics for FPV Video & Control Links"
+description: "Polarization, gain, and why antenna choice matters as much as transmitter power."
+category: "Radio & Link"
+order: 8
+---
+
+FPV setups run two separate RF links — video (analog or digital, typically
+5.8GHz) and control (typically 2.4GHz, e.g. ELRS/Crossfire) — and both
+depend heavily on antenna choice, not just transmitter power.
+
+## Polarization
+
+Circular polarization (RHCP/LHCP) resists multipath interference from
+reflections much better than linear polarization, which is why nearly all
+modern FPV video antennas are circularly polarized. Matching polarization
+between transmitter and receiver antenna matters — mismatched polarization
+causes a real signal loss even at short range.
+
+## Gain and pattern
+
+Higher-gain antennas focus RF energy into a narrower cone, extending range
+directly ahead at the cost of coverage to the sides and behind — a poor
+trade for freestyle flying close to obstacles, but often a good one for
+long, straight-line range flights.
+
+## Orientation
+
+Whip and cloverleaf-style antennas should generally be mounted vertically
+and kept clear of carbon fiber (which blocks RF) and other antennas, since
+antenna-to-antenna interference and self-blocking by the frame are common,
+easily fixed causes of a link that seems to fail well inside its rated
+range.

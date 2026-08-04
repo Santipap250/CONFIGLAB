@@ -1,0 +1,35 @@
+---
+title: "Motor & ESC Basics"
+description: "KV, poles, and how ESC protocol choice affects how fast your quad actually responds."
+category: "Hardware"
+order: 3
+---
+
+## KV rating
+
+KV is RPM per volt at no load — a 2400KV motor spins roughly 2400 RPM per
+volt of input, before load from the prop and air. Higher KV suits smaller,
+lighter props and higher cell counts favor lower KV for the same prop, to
+keep current and heat in check.
+
+## Why KV matters for tuning
+
+KV and prop size together set the frequency where motor noise shows up in
+the gyro signal — this is the number dynamic notch filters need to track
+correctly. Changing prop size or motor without revisiting notch range is a
+common cause of a tune that "used to work" suddenly feeling harsh.
+
+## ESC protocol
+
+Digital protocols (DSHOT300/600) send discrete, checksum-verified throttle
+values with far less latency and noise than legacy analog PWM/OneShot. Nearly
+all modern builds should run DSHOT — the main choice is DSHOT300 vs DSHOT600,
+where 600 gives finer resolution but needs a clean signal path (short wires,
+good soldering) to stay reliable at higher bitrates.
+
+## Bidirectional DSHOT (RPM filtering)
+
+When ESCs support telemetry back to the FC, Betaflight can read actual motor
+RPM and set notch filters *exactly* on the real noise frequency per-motor,
+continuously — this is more precise than a KV-estimated dynamic notch and is
+the modern default when hardware supports it.

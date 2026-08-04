@@ -1,0 +1,38 @@
+---
+title: "PID Controller Basics"
+description: "What P, I, and D actually do to your flight controller's response, in plain terms."
+category: "Fundamentals"
+order: 1
+---
+
+A flight controller doesn't fly your quad — it constantly compares where the
+gyro says the craft *is* against where your stick input says it *should be*,
+and corrects the error. The PID loop is how that correction is shaped.
+
+## P — Proportional
+
+Proportional term reacts to the **size of the current error**. Higher P means
+a sharper, more immediate correction to any deviation from the setpoint. Too
+much P and the quad feels twitchy or oscillates at a fast, tight frequency;
+too little and it feels sloppy or floaty under wind and prop wash.
+
+## I — Integral
+
+Integral term reacts to **accumulated error over time** — it's what holds an
+angle against a constant disturbance, like wind or a slightly bent frame arm.
+Too much I causes a slow, wallowing oscillation (often called "I-term
+bounce"); too little and the quad drifts or sags out of a hold, especially
+noticeable in punch-outs and stalls.
+
+## D — Derivative
+
+Derivative term reacts to the **rate of change of the error**, effectively
+damping the P term so the craft doesn't overshoot its target. Too much D
+amplifies high-frequency noise (motor heat, prop hop); too little lets P
+overshoot and oscillate.
+
+## Why order matters
+
+Tune in this order: get filters clean first (see *Gyro & D-term Filters*),
+then P, then D, then I. Chasing P/D against a noisy, unfiltered gyro signal
+means you're tuning against noise, not against the airframe.

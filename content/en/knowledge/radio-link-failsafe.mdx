@@ -1,0 +1,33 @@
+---
+title: "Radio Link & Failsafe"
+description: "How the RX link actually fails, and why failsafe configuration is not optional."
+category: "Radio & Link"
+order: 4
+---
+
+## Link quality vs range
+
+Modern protocols (ELRS, Crossfire) report a link quality / RSSI value that
+reflects packet delivery, not just signal strength. A link doesn't usually
+fail abruptly at range — packet loss increases gradually, and the radio
+system drops to more robust (slower) modes before a full failsafe, if
+configured to do so.
+
+## What failsafe actually does
+
+Failsafe is the flight controller's response when it stops receiving valid
+RX data for a set number of frames — not a receiver-side feature. In
+Betaflight, failsafe procedure (`Drop`, `Land`, `Return to Home stage`) and
+the guard time before it triggers are both configured on the FC, and should
+be tested — safely, on the bench with props off — before every new build's
+first flight.
+
+## Common mistakes
+
+- Leaving failsafe on defaults without confirming the throttle/stage
+  behavior matches the frame (e.g. `Land` on a heavy long-range build without
+  a strong enough drop profile).
+- Never testing failsafe by powering off the transmitter with props on,
+  in a safe direction, before a maiden flight.
+- Confusing low RSSI warnings (a tuning/positioning problem) with an actual
+  failsafe event (a link-loss problem) when reviewing a flight log.

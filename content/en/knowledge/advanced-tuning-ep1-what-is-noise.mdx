@@ -1,0 +1,65 @@
+---
+title: "Advanced Tuning EP1: What Is Noise? Why It Quietly Wrecks Your Drone Without You Noticing"
+description: "Understanding noise before you touch PID — the silent root cause behind shaky flight, hot motors, and a tune that never feels truly locked in."
+category: "Advanced Tuning"
+order: 9
+---
+
+Plenty of pilots run into this:
+
+- The quad shakes, even though the PID values look fine
+- Motors run warm or hot easily
+- Video feed glitches, breaks up, or shows tearing
+- No matter how much you adjust PID, it never feels truly "locked in"
+
+More often than not, these problems **aren't PID at all** — they're
+something called **noise**.
+
+## What is noise?
+
+Noise is unwanted interference that gets mixed into the gyro data,
+making the flight controller "believe the craft is shaking or moving"
+when in reality the airframe may be perfectly still.
+
+The result:
+
+1. The FC keeps commanding motor corrections constantly
+2. The quad shakes
+3. Motors run hot
+4. Flight feels unsettled
+
+## Why is noise dangerous?
+
+Because it causes:
+
+- PID to work harder than it needs to
+- Filters to have to work overtime
+- Slower overall response
+- A tune that never feels sharp or locked in
+
+And worst of all, it tricks you into thinking "I need to adjust PID"
+when that was never the actual root cause.
+
+## The truth every pilot should know
+
+> If noise is still high, no matter how good the PID values are —
+> even from the best-tuned quad in the world — it will never truly feel locked in.
+
+The correct order is to fix noise/filtering first, then move on to PID —
+see <a href="/en/knowledge/gyro-dterm-filters">Understanding Gyro &amp;
+D-term Filters</a> in the Knowledge Hub for more.
+
+## EP1 summary
+
+**Noise is the silent enemy of FPV drones.** It's the root of many other
+problems, and needs to be understood before touching PID and filters.
+
+## Coming up next
+
+- Where noise actually comes from in an FPV drone
+- The most common mistake pilots make with it
+
+---
+
+*Content adapted from the Advanced Tuning series on the{" "}
+<a href="https://www.facebook.com/banmysanti" target="_blank" rel="noopener noreferrer">OBIX Config Lab</a> Facebook page*

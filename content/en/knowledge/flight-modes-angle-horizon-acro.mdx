@@ -1,0 +1,39 @@
+---
+title: "Flight Modes: Angle, Horizon, Acro"
+description: "What the flight controller is actually doing differently in each mode, not just how it feels."
+category: "Fundamentals"
+order: 7
+---
+
+The same PID loop runs underneath every flight mode — what changes is what
+the FC treats as the target the loop is correcting toward.
+
+## Acro (rate mode)
+
+There's no self-leveling at all. Stick input maps directly to a rotation
+*rate* (how fast the craft spins), and it's entirely on the pilot to return
+to level flight. This is the mode almost all freestyle and racing flying
+happens in, because it allows full flips, rolls, and inverted flight.
+
+## Angle mode
+
+Stick input maps to a target *angle* — release the sticks and the FC
+actively levels the craft back to that angle, up to the configured
+`angle_limit`. This trades away full aerobatic maneuvers for a mode that's
+much harder to crash by accident, which is why it's the standard first
+flight-mode for a maiden flight or a new pilot.
+
+## Horizon mode
+
+A blend: near center stick it behaves like Angle mode (self-leveling), but
+past a threshold it progressively hands off to Acro-like rate response,
+allowing flips and rolls on full stick deflection while still self-leveling
+when the sticks are released. It's a middle ground, not a strictly "better"
+or "worse" mode than the other two.
+
+## Why this matters for tuning
+
+PID values are tuned primarily for Acro's rate response. Angle and Horizon
+modes add their own leveling behavior on top, controlled separately by
+`angle_limit` and mode-specific strength settings — so a twitchy feeling in
+Angle mode isn't automatically a PID problem in the underlying rate tune.

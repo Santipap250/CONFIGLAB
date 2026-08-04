@@ -1,1 +1,42 @@
+---
+title: "Understanding Gyro & D-term Filters"
+description: "Why filtering comes before PID tuning, and what each filter stage is actually removing."
+category: "Tuning"
+order: 2
+---
 
+Every gyro reading carries real flight data plus mechanical noise — motor
+vibration, prop imbalance, frame resonance. Filters remove the noise so the
+PID loop reacts to the airframe, not to the noise floor.
+
+## Low-pass filters (LPF)
+
+Gyro and D-term low-pass filters cut everything above a chosen frequency.
+Lower cutoff = smoother signal but more latency (delay) in the control loop;
+higher cutoff = snappier response but more noise gets through. The right
+cutoff depends on prop size, motor KV, and frame stiffness — there's no
+universal number.
+
+## Dynamic notch filters
+
+Instead of one fixed cutoff, dynamic notch filters track the dominant noise
+frequencies in real time (usually motor-order harmonics) and carve narrow
+notches around them, leaving the rest of the spectrum untouched. This is why
+motor KV and prop size matter for notch range settings — they set where the
+noise actually lives.
+
+## Reading it in blackbox
+
+A clean gyro trace in blackbox looks like a smooth line following stick
+input with no fuzzy thickening. A fuzzy or "hairy" trace means noise is
+getting through the filters and will show up as heat in the motors and
+harshness in the PID response, even if P/I/D look "correct" on paper.
+
+## Practical order
+
+1. Confirm props are balanced and motors are mechanically sound — filtering
+   can't fix a bent shaft.
+2. Set dynamic notch range from motor KV / prop size.
+3. Set LPF cutoffs conservatively, then tighten while watching blackbox and
+   motor temperature.
+4. Only then move on to P/I/D.
