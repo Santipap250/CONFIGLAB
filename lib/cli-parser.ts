@@ -1,4 +1,5 @@
 import { buildCliLookup, slugifyCommand, type CliCommand } from "./cli-data";
+import type { Locale } from "./i18n/locales";
 
 export type ParsedSetting = { key: string; value: string; line: number };
 
@@ -48,51 +49,65 @@ function parseNumericRange(range?: string): [number, number] | null {
 function isEnumRange(range?: string): string[] | null {
   if (!range) return null;
   if (!range.includes("/")) return null;
-  // ranges like "PWM / ONESHOT125 / ... / DSHOT600" — but numeric units
-  // string like "1000–2000" already excluded by the caller checking dash.
   return range.split("/").map((s) => s.trim().toUpperCase());
 }
 
+const MSG = {
+  en: {
+    outOfRange: (value: string, range: string, key: string) =>
+      `${value} is outside the typical ${range} range for ${key}.`,
+    notInEnum: (value: string, range: string) =>
+      `"${value}" isn't one of the values this reference expects (${range}).`,
+    dshotIdleLow: "Below ~450 this often causes motor stutter or stalling at idle.",
+    vbatLow: "Below 3.20V/cell risks over-discharging the pack before the FC warns you.",
+    vbatHigh: "Above 3.50V/cell may trigger low-voltage warnings earlier than expected.",
+    motorLimitCapped: "Motor output is capped below 100% — confirm this is intentional (e.g. motor break-in).",
+    notchRangeInvalid: (min: string, max: string) =>
+      `dyn_notch_min_hz (${min}) must be lower than dyn_notch_max_hz (${max}).`,
+  },
+  th: {
+    outOfRange: (value: string, range: string, key: string) =>
+      `${value} อยู่นอกช่วง ${range} ที่ปกติใช้กับ ${key}`,
+    notInEnum: (value: string, range: string) =>
+      `"${value}" ไม่ใช่ค่าที่อยู่ในรายการที่คาดไว้ (${range})`,
+    dshotIdleLow: "ต่ำกว่า ~450 มักทำให้มอเตอร์สะดุดหรือดับตอน idle",
+    vbatLow: "ต่ำกว่า 3.20V/เซลล์ เสี่ยงใช้แบตจนเกินขีดจำกัดก่อนที่ FC จะเตือน",
+    vbatHigh: "สูงกว่า 3.50V/เซลล์ อาจทำให้เตือนแรงดันต่ำเร็วเกินความจำเป็น",
+    motorLimitCapped: "Motor output ถูกจำกัดไว้ต่ำกว่า 100% — เช็คว่าตั้งใจตั้งไว้แบบนี้ (เช่นตอนรันอินมอเตอร์)",
+    notchRangeInvalid: (min: string, max: string) =>
+      `dyn_notch_min_hz (${min}) ต้องน้อยกว่า dyn_notch_max_hz (${max})`,
+  },
+} as const;
+
 /** A handful of specific, high-value checks beyond generic range-checking —
  *  these are the "this could actually hurt you" flags. */
-function specialChecks(key: string, numeric: number | null): AnalyzedSetting["flags"] {
+function specialChecks(locale: Locale, key: string, numeric: number | null): AnalyzedSetting["flags"] {
+  const m = MSG[locale];
   const flags: AnalyzedSetting["flags"] = [];
   if (key === "dshot_idle_value" && numeric !== null && numeric < 450) {
-    flags.push({
-      level: "warn",
-      message: "Below ~450 this often causes motor stutter or stalling at idle.",
-    });
+    flags.push({ level: "warn", message: m.dshotIdleLow });
   }
   if (key === "vbat_min_cell_voltage" && numeric !== null) {
     if (numeric < 320) {
-      flags.push({
-        level: "warn",
-        message: "Below 3.20V/cell risks over-discharging the pack before the FC warns you.",
-      });
+      flags.push({ level: "warn", message: m.vbatLow });
     } else if (numeric > 350) {
-      flags.push({
-        level: "info",
-        message: "Above 3.50V/cell may trigger low-voltage warnings earlier than expected.",
-      });
+      flags.push({ level: "info", message: m.vbatHigh });
     }
   }
   if (key === "motor_output_limit" && numeric !== null && numeric < 100) {
-    flags.push({
-      level: "info",
-      message: "Motor output is capped below 100% — confirm this is intentional (e.g. motor break-in).",
-    });
+    flags.push({ level: "info", message: m.motorLimitCapped });
   }
   return flags;
 }
 
 export function analyzeSettings(
+  locale: Locale,
   parsed: ParsedSetting[]
 ): { results: AnalyzedSetting[]; summary: AnalysisSummary } {
-  const lookup = buildCliLookup();
+  const m = MSG[locale];
+  const lookup = buildCliLookup(locale);
   const results: AnalyzedSetting[] = [];
 
-  // For the min/max-pair check (dyn_notch_min_hz vs max_hz) we need both
-  // values up front.
   const byKey = new Map(parsed.map((p) => [p.key, p.value]));
 
   for (const p of parsed) {
@@ -112,20 +127,14 @@ export function analyzeSettings(
         const [min, max] = numRange;
         if (numeric < min || numeric > max) {
           outOfRange = true;
-          flags.push({
-            level: "error",
-            message: `${p.value} is outside the typical ${entry.range} range for ${p.key}.`,
-          });
+          flags.push({ level: "error", message: m.outOfRange(p.value, entry.range ?? "", p.key) });
         }
       } else if (enumRange && !enumRange.includes(p.value.toUpperCase())) {
         outOfRange = true;
-        flags.push({
-          level: "warn",
-          message: `"${p.value}" isn't one of the values this reference expects (${entry.range}).`,
-        });
+        flags.push({ level: "warn", message: m.notInEnum(p.value, entry.range ?? "") });
       }
 
-      flags.push(...specialChecks(p.key, numeric));
+      flags.push(...specialChecks(locale, p.key, numeric));
     }
 
     results.push({
@@ -141,15 +150,11 @@ export function analyzeSettings(
     });
   }
 
-  // Cross-field check: dyn_notch_min_hz must be < dyn_notch_max_hz.
   const minHz = byKey.get("dyn_notch_min_hz");
   const maxHz = byKey.get("dyn_notch_max_hz");
   if (minHz && maxHz && parseFloat(minHz) >= parseFloat(maxHz)) {
     const target = results.find((r) => r.key === "dyn_notch_min_hz");
-    target?.flags.push({
-      level: "error",
-      message: `dyn_notch_min_hz (${minHz}) must be lower than dyn_notch_max_hz (${maxHz}).`,
-    });
+    target?.flags.push({ level: "error", message: m.notchRangeInvalid(minHz, maxHz) });
   }
 
   const summary: AnalysisSummary = {

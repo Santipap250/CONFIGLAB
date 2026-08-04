@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import type { Locale } from "./i18n/locales";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -11,7 +12,6 @@ export type KnowledgeEntry = {
   description: string;
   category: string;
   order?: number;
-  lang?: string;
 };
 
 export type ArticleEntry = {
@@ -35,26 +35,30 @@ function readEntry(sub: string, file: string) {
   return { slug: file.replace(/\.mdx$/, ""), content, ...(data as Record<string, unknown>) };
 }
 
-export function getAllKnowledge(): KnowledgeEntry[] {
-  return listMdx("knowledge")
-    .map((f) => readEntry("knowledge", f) as unknown as KnowledgeEntry)
+export function getAllKnowledge(locale: Locale): KnowledgeEntry[] {
+  const sub = `${locale}/knowledge`;
+  return listMdx(sub)
+    .map((f) => readEntry(sub, f) as unknown as KnowledgeEntry)
     .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 }
 
-export function getKnowledgeBySlug(slug: string): KnowledgeEntry | null {
-  const file = path.join(CONTENT_DIR, "knowledge", `${slug}.mdx`);
+export function getKnowledgeBySlug(locale: Locale, slug: string): KnowledgeEntry | null {
+  const sub = `${locale}/knowledge`;
+  const file = path.join(CONTENT_DIR, sub, `${slug}.mdx`);
   if (!fs.existsSync(file)) return null;
-  return readEntry("knowledge", `${slug}.mdx`) as unknown as KnowledgeEntry;
+  return readEntry(sub, `${slug}.mdx`) as unknown as KnowledgeEntry;
 }
 
-export function getAllArticles(): ArticleEntry[] {
-  return listMdx("articles")
-    .map((f) => readEntry("articles", f) as unknown as ArticleEntry)
+export function getAllArticles(locale: Locale): ArticleEntry[] {
+  const sub = `${locale}/articles`;
+  return listMdx(sub)
+    .map((f) => readEntry(sub, f) as unknown as ArticleEntry)
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function getArticleBySlug(slug: string): ArticleEntry | null {
-  const file = path.join(CONTENT_DIR, "articles", `${slug}.mdx`);
+export function getArticleBySlug(locale: Locale, slug: string): ArticleEntry | null {
+  const sub = `${locale}/articles`;
+  const file = path.join(CONTENT_DIR, sub, `${slug}.mdx`);
   if (!fs.existsSync(file)) return null;
-  return readEntry("articles", `${slug}.mdx`) as unknown as ArticleEntry;
+  return readEntry(sub, `${slug}.mdx`) as unknown as ArticleEntry;
 }
