@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { Dictionary } from "@/lib/i18n/get-dictionary";
 
 const WIDTH = 560;
 const HEIGHT = 320;
@@ -16,7 +17,8 @@ function computeRate(stickPct: number, rcRate: number, superRate: number, expo: 
   return rate;
 }
 
-export default function RatesVisualizer() {
+export default function RatesVisualizer({ dict }: { dict: Dictionary }) {
+  const t = dict.rates;
   const [rcRate, setRcRate] = useState(1.0);
   const [superRate, setSuperRate] = useState(0.7);
   const [expo, setExpo] = useState(0.0);
@@ -106,28 +108,27 @@ export default function RatesVisualizer() {
           </text>
         </svg>
         <p className="mt-3 font-[family-name:var(--font-mono)] text-[11px] text-[color:var(--color-ash)]">
-          Approximate curve for visualizing feel — for exact firmware values,
-          always confirm in Betaflight Configurator.
+{t.approxNote}
         </p>
       </div>
 
       <div className="space-y-6">
-        <Field label="RC Rate" value={rcRate} onChange={setRcRate} min={0.1} max={2.5} step={0.05} />
-        <Field label="Super Rate" value={superRate} onChange={setSuperRate} min={0} max={0.95} step={0.01} />
-        <Field label="Expo" value={expo} onChange={setExpo} min={0} max={1} step={0.01} />
+        <Field label={t.rcRate} value={rcRate} onChange={setRcRate} min={0.1} max={2.5} step={0.05} />
+        <Field label={t.superRate} value={superRate} onChange={setSuperRate} min={0} max={0.95} step={0.01} />
+        <Field label={t.expo} value={expo} onChange={setExpo} min={0} max={1} step={0.01} />
 
         <div className="rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] p-5">
           <dl className="space-y-3 font-[family-name:var(--font-mono)] text-[13px]">
             <div>
-              <dt className="text-[color:var(--color-ash)]">Max rate</dt>
+              <dt className="text-[color:var(--color-ash)]">{t.maxRate}</dt>
               <dd className="text-[color:var(--color-phosphor)]">
                 {maxRate.toFixed(0)}°/s
               </dd>
             </div>
             <div>
-              <dt className="text-[color:var(--color-ash)]">Center feel</dt>
+              <dt className="text-[color:var(--color-ash)]">{t.centerFeel}</dt>
               <dd className="text-[color:var(--color-paper)]">
-                {centerSensitivity.toFixed(0)}°/s per 1% stick
+                {centerSensitivity.toFixed(0)}{t.perPercentStick}
               </dd>
             </div>
           </dl>

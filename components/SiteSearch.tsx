@@ -4,14 +4,7 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboa
 import { useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
 import type { SearchItem } from "@/lib/search-index";
-
-const TYPE_LABEL: Record<SearchItem["type"], string> = {
-  Knowledge: "Knowledge",
-  Article: "Article",
-  CLI: "CLI Library",
-  Troubleshoot: "Troubleshoot",
-  Tool: "Tool",
-};
+import type { Dictionary } from "@/lib/i18n/get-dictionary";
 
 function matches(item: SearchItem, query: string) {
   const words = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -20,7 +13,7 @@ function matches(item: SearchItem, query: string) {
   return words.every((w) => haystack.includes(w));
 }
 
-export default function SiteSearch({ index }: { index: SearchItem[] }) {
+export default function SiteSearch({ index, dict }: { index: SearchItem[]; dict: Dictionary }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -113,12 +106,12 @@ export default function SiteSearch({ index }: { index: SearchItem[] }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Search the site"
+        aria-label={dict.nav.searchSite}
         className="flex items-center gap-2 rounded-sm border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] px-3 py-1.5 text-[color:var(--color-ash)] transition-colors hover:border-[color:var(--color-phosphor-dim)] hover:text-[color:var(--color-paper)]"
       >
         <Search className="h-4 w-4" strokeWidth={2} />
         <span className="hidden font-[family-name:var(--font-mono)] text-[12px] sm:inline">
-          Search
+          {dict.nav.search}
         </span>
         <kbd className="hidden rounded-sm border border-[color:var(--color-carbon-line)] px-1.5 py-0.5 font-[family-name:var(--font-mono)] text-[10px] text-[color:var(--color-ash)] sm:inline">
           ⌘K
@@ -146,13 +139,13 @@ export default function SiteSearch({ index }: { index: SearchItem[] }) {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search commands, symptoms, articles…"
+                placeholder={dict.search.placeholder}
                 className="w-full bg-transparent font-[family-name:var(--font-mono)] text-sm text-[color:var(--color-paper)] outline-none placeholder:text-[color:var(--color-ash)]"
               />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close search"
+                aria-label={dict.search.close}
                 className="shrink-0 text-[color:var(--color-ash)] hover:text-[color:var(--color-paper)]"
               >
                 <X className="h-4 w-4" strokeWidth={2} />
@@ -162,7 +155,7 @@ export default function SiteSearch({ index }: { index: SearchItem[] }) {
             <div className="max-h-[55vh] overflow-y-auto py-2">
               {results.length === 0 && (
                 <p className="px-4 py-8 text-center font-[family-name:var(--font-mono)] text-sm text-[color:var(--color-ash)]">
-                  No matches for &quot;{query}&quot;.
+                  {dict.search.noMatches} &quot;{query}&quot;.
                 </p>
               )}
               {results.map((item, i) => (
@@ -178,7 +171,7 @@ export default function SiteSearch({ index }: { index: SearchItem[] }) {
                   }`}
                 >
                   <span className="mt-0.5 shrink-0 rounded-sm border border-[color:var(--color-carbon-line)] px-1.5 py-0.5 font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-wide text-[color:var(--color-phosphor)]">
-                    {TYPE_LABEL[item.type]}
+                    {dict.search.types[item.type]}
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-[family-name:var(--font-display)] text-[14px] font-medium text-[color:var(--color-paper)]">
@@ -193,9 +186,9 @@ export default function SiteSearch({ index }: { index: SearchItem[] }) {
             </div>
 
             <div className="flex items-center gap-4 border-t border-[color:var(--color-carbon-line)] px-4 py-2 font-[family-name:var(--font-mono)] text-[10px] text-[color:var(--color-ash)]">
-              <span>↑↓ navigate</span>
-              <span>↵ open</span>
-              <span>esc close</span>
+              <span>↑↓ {dict.search.navigate}</span>
+              <span>↵ {dict.search.open}</span>
+              <span>esc {dict.search.escClose}</span>
             </div>
           </div>
         </div>

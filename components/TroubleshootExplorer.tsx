@@ -3,11 +3,17 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { TroubleshootEntry } from "@/lib/troubleshoot-data";
+import type { Dictionary } from "@/lib/i18n/get-dictionary";
+import { withLocale, type Locale } from "@/lib/i18n/locales";
 
 export default function TroubleshootExplorer({
   entries,
+  dict,
+  locale,
 }: {
   entries: TroubleshootEntry[];
+  dict: Dictionary;
+  locale: Locale;
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string | null>(null);
@@ -35,7 +41,7 @@ export default function TroubleshootExplorer({
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Describe what the quad is doing, e.g. “bounces after flip”…"
+        placeholder={dict.troubleshoot.searchPlaceholder}
         className="w-full max-w-xl rounded-sm border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] px-4 py-3 font-[family-name:var(--font-mono)] text-sm text-[color:var(--color-paper)] outline-none placeholder:text-[color:var(--color-ash)] focus:border-[color:var(--color-phosphor-dim)]"
       />
 
@@ -48,7 +54,7 @@ export default function TroubleshootExplorer({
               : "border-[color:var(--color-carbon-line)] text-[color:var(--color-ash)] hover:border-[color:var(--color-signal-amber)]"
           }`}
         >
-          All
+          {dict.troubleshoot.all}
         </button>
         {categories.map((cat) => (
           <button
@@ -68,7 +74,7 @@ export default function TroubleshootExplorer({
       <div className="mt-8 space-y-3">
         {filtered.length === 0 && (
           <p className="py-10 text-center font-[family-name:var(--font-mono)] text-sm text-[color:var(--color-ash)]">
-            No matches. Try a shorter phrase, e.g. “oscillate” or “disarm”.
+            {dict.troubleshoot.noMatches}
           </p>
         )}
         {filtered.map((e) => (
@@ -89,7 +95,7 @@ export default function TroubleshootExplorer({
             </summary>
             <div className="border-t border-[color:var(--color-carbon-line)] px-5 py-4">
               <p className="font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-wide text-[color:var(--color-ash)]">
-                Likely causes
+                {dict.troubleshoot.likelyCauses}
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed text-[color:var(--color-paper)]">
                 {e.causes.map((c) => (
@@ -97,17 +103,17 @@ export default function TroubleshootExplorer({
                 ))}
               </ul>
               <p className="mt-4 font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-wide text-[color:var(--color-phosphor)]">
-                Fix path
+                {dict.troubleshoot.fixPath}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-paper)]">
                 {e.fix}
               </p>
               {e.relatedKnowledge && (
                 <Link
-                  href={`/knowledge/${e.relatedKnowledge}`}
+                  href={withLocale(locale, `/knowledge/${e.relatedKnowledge}`)}
                   className="mt-4 inline-block font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-phosphor)]"
                 >
-                  Related: read the concept →
+                  {dict.troubleshoot.relatedLink}
                 </Link>
               )}
             </div>

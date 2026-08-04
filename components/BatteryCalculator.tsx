@@ -6,7 +6,10 @@ const CELL_NOMINAL = 3.7;
 const CELL_FULL = 4.2;
 const CELL_STORAGE_MIN = 3.3; // conservative per-cell floor to protect the pack
 
-export default function BatteryCalculator() {
+import type { Dictionary } from "@/lib/i18n/get-dictionary";
+
+export default function BatteryCalculator({ dict }: { dict: Dictionary }) {
+  const t = dict.battery;
   const [capacity, setCapacity] = useState(1300); // mAh
   const [cRating, setCRating] = useState(75);
   const [cells, setCells] = useState(6); // S count
@@ -30,7 +33,7 @@ export default function BatteryCalculator() {
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
       <div className="space-y-6">
         <Field
-          label="Capacity"
+          label={t.capacity}
           unit="mAh"
           value={capacity}
           onChange={setCapacity}
@@ -39,7 +42,7 @@ export default function BatteryCalculator() {
           step={50}
         />
         <Field
-          label="C-rating"
+          label={t.cRating}
           unit="C"
           value={cRating}
           onChange={setCRating}
@@ -48,7 +51,7 @@ export default function BatteryCalculator() {
           step={5}
         />
         <Field
-          label="Cell count"
+          label={t.cellCount}
           unit="S"
           value={cells}
           onChange={setCells}
@@ -57,7 +60,7 @@ export default function BatteryCalculator() {
           step={1}
         />
         <Field
-          label="Average current draw"
+          label={t.avgCurrent}
           unit="A"
           value={avgCurrent}
           onChange={setAvgCurrent}
@@ -69,36 +72,33 @@ export default function BatteryCalculator() {
 
       <div className="rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] p-6">
         <p className="font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-phosphor-dim)]">
-          Estimate
+          {t.estimate}
         </p>
         <p className="mt-2 font-[family-name:var(--font-display)] text-4xl font-semibold text-[color:var(--color-phosphor)] text-glow">
           {stats.flightMinutes.toFixed(1)}
-          <span className="ml-2 text-lg text-[color:var(--color-ash)]">min flight time</span>
+          <span className="ml-2 text-lg text-[color:var(--color-ash)]">{t.flightTime}</span>
         </p>
         <p className="mt-1 text-[12px] text-[color:var(--color-ash)]">
-          Based on 80% usable capacity — leaves ~20% in the pack rather than
-          discharging to empty.
+{t.usableNote}
         </p>
 
         <div className="signal-rule my-6" />
 
         <dl className="grid grid-cols-2 gap-y-4 font-[family-name:var(--font-mono)] text-[13px]">
-          <Stat label="Max continuous draw" value={`${stats.maxContinuousA.toFixed(0)} A`} />
+          <Stat label={t.maxContinuous} value={`${stats.maxContinuousA.toFixed(0)} A`} />
           <Stat
-            label="Current headroom"
+            label={t.headroom}
             value={`${stats.headroomPct.toFixed(0)}%`}
             warn={tight}
           />
-          <Stat label="Nominal voltage" value={`${stats.nominalV.toFixed(1)} V`} />
-          <Stat label="Full charge" value={`${stats.fullV.toFixed(1)} V`} />
-          <Stat label="Conservative floor" value={`${stats.minV.toFixed(1)} V`} />
+          <Stat label={t.nominalV} value={`${stats.nominalV.toFixed(1)} V`} />
+          <Stat label={t.fullCharge} value={`${stats.fullV.toFixed(1)} V`} />
+          <Stat label={t.conservativeFloor} value={`${stats.minV.toFixed(1)} V`} />
         </dl>
 
         {tight && (
           <p className="mt-5 rounded-sm border border-[color:var(--color-signal-amber)] bg-[color:var(--color-signal-amber)]/10 px-4 py-3 text-[12px] text-[color:var(--color-signal-amber)]">
-            Average draw is close to this pack&apos;s continuous rating — expect
-            more voltage sag and heat. Consider a higher C-rating or lower
-            average current.
+{t.tightWarning}
           </p>
         )}
       </div>

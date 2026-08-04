@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CliCommand } from "@/lib/cli-data";
 import { slugifyCommand } from "@/lib/cli-data";
+import type { Dictionary } from "@/lib/i18n/get-dictionary";
 
-export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
+export default function CliExplorer({ commands, dict }: { commands: CliCommand[]; dict: Dictionary }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string | null>(null);
 
@@ -46,11 +47,11 @@ export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search a command, e.g. dyn_notch_q…"
+          placeholder={dict.cli.searchPlaceholder}
           className="w-full max-w-md rounded-sm border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] px-4 py-3 font-[family-name:var(--font-mono)] text-sm text-[color:var(--color-paper)] outline-none placeholder:text-[color:var(--color-ash)] focus:border-[color:var(--color-phosphor-dim)]"
         />
         <p className="font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-ash)]">
-          {filtered.length} / {commands.length} commands
+          {filtered.length} / {commands.length} {dict.cli.countOf}
         </p>
       </div>
 
@@ -63,7 +64,7 @@ export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
               : "border-[color:var(--color-carbon-line)] text-[color:var(--color-ash)] hover:border-[color:var(--color-phosphor-dim)]"
           }`}
         >
-          All
+          {dict.cli.all}
         </button>
         {categories.map((cat) => (
           <button
@@ -83,7 +84,7 @@ export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
       <div className="mt-8 space-y-3">
         {filtered.length === 0 && (
           <p className="py-10 text-center font-[family-name:var(--font-mono)] text-sm text-[color:var(--color-ash)]">
-            No commands match &quot;{query}&quot;.
+            {dict.cli.noMatches} &quot;{query}&quot;.
           </p>
         )}
         {filtered.map((c) => (
@@ -111,16 +112,16 @@ export default function CliExplorer({ commands }: { commands: CliCommand[] }) {
               </p>
               <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2 font-[family-name:var(--font-mono)] text-[12px]">
                 <div>
-                  <dt className="text-[color:var(--color-ash)]">type</dt>
+                  <dt className="text-[color:var(--color-ash)]">{dict.cli.type}</dt>
                   <dd className="text-[color:var(--color-paper)]">{c.type}</dd>
                 </div>
                 <div>
-                  <dt className="text-[color:var(--color-ash)]">default</dt>
+                  <dt className="text-[color:var(--color-ash)]">{dict.cli.default}</dt>
                   <dd className="text-[color:var(--color-phosphor)]">{c.default}</dd>
                 </div>
                 {c.range && (
                   <div>
-                    <dt className="text-[color:var(--color-ash)]">range</dt>
+                    <dt className="text-[color:var(--color-ash)]">{dict.cli.range}</dt>
                     <dd className="text-[color:var(--color-paper)]">{c.range}</dd>
                   </div>
                 )}

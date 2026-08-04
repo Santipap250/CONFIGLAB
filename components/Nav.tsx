@@ -4,24 +4,34 @@ import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { usePathname } from "next/navigation";
 import SiteSearch from "@/components/SiteSearch";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 import type { SearchItem } from "@/lib/search-index";
+import type { Dictionary } from "@/lib/i18n/get-dictionary";
+import { withLocale, type Locale } from "@/lib/i18n/locales";
 
-const LINKS = [
-  { href: "/analyzer", label: "Config Analyzer" },
-  { href: "/knowledge", label: "Knowledge" },
-  { href: "/cli", label: "CLI Library" },
-  { href: "/troubleshoot", label: "Troubleshoot" },
-  { href: "/tuning", label: "Tuning" },
-  { href: "/tools", label: "Tools" },
-  { href: "/articles", label: "Articles" },
-];
-
-export default function Nav({ searchIndex }: { searchIndex: SearchItem[] }) {
+export default function Nav({
+  locale,
+  dict,
+  searchIndex,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+  searchIndex: SearchItem[];
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const menuId = useId();
 
-  // Close the mobile menu on route change and on Escape.
+  const LINKS = [
+    { href: withLocale(locale, "/analyzer"), label: dict.nav.configAnalyzer },
+    { href: withLocale(locale, "/knowledge"), label: dict.nav.knowledge },
+    { href: withLocale(locale, "/cli"), label: dict.nav.cliLibrary },
+    { href: withLocale(locale, "/troubleshoot"), label: dict.nav.troubleshoot },
+    { href: withLocale(locale, "/tuning"), label: dict.nav.tuning },
+    { href: withLocale(locale, "/tools"), label: dict.nav.tools },
+    { href: withLocale(locale, "/articles"), label: dict.nav.articles },
+  ];
+
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
@@ -38,7 +48,7 @@ export default function Nav({ searchIndex }: { searchIndex: SearchItem[] }) {
   return (
     <header className="sticky top-0 z-30 border-b border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon)]/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Link href="/" className="group flex items-center gap-2">
+        <Link href={withLocale(locale, "/")} className="group flex items-center gap-2">
           <span
             aria-hidden="true"
             className="h-2 w-2 rounded-full bg-[color:var(--color-phosphor)] shadow-[0_0_10px_var(--color-phosphor)] transition-transform group-hover:scale-125"
@@ -61,40 +71,33 @@ export default function Nav({ searchIndex }: { searchIndex: SearchItem[] }) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <SiteSearch index={searchIndex} />
+          <SiteSearch index={searchIndex} dict={dict} />
+          <LocaleSwitcher locale={locale} />
 
           <Link
-            href="/faq"
+            href={withLocale(locale, "/faq")}
             className="hidden rounded-sm border border-[color:var(--color-phosphor-dim)] px-3 py-1.5 font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-phosphor)] transition-colors hover:bg-[color:var(--color-phosphor)] hover:text-[color:var(--color-carbon)] sm:inline-block"
           >
-            Support
+            {dict.nav.support}
           </Link>
 
-          {/* Mobile menu toggle — the nav above is hidden below md, so this
-              is the only way to reach Knowledge/CLI/Troubleshoot/etc. on
-              phones. Native button + aria-expanded/controls for a11y. */}
           <button
             type="button"
             aria-expanded={open}
             aria-controls={menuId}
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? dict.nav.closeMenu : dict.nav.openMenu}
             onClick={() => setOpen((v) => !v)}
             className="flex h-9 w-9 items-center justify-center rounded-sm border border-[color:var(--color-carbon-line)] text-[color:var(--color-paper)] transition-colors hover:border-[color:var(--color-phosphor-dim)] md:hidden"
           >
             <span aria-hidden="true" className="relative flex h-3.5 w-4 flex-col justify-between">
-              <span
-                className={`h-[1.5px] w-full bg-current transition-transform ${open ? "translate-y-[6.5px] rotate-45" : ""}`}
-              />
+              <span className={`h-[1.5px] w-full bg-current transition-transform ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
               <span className={`h-[1.5px] w-full bg-current transition-opacity ${open ? "opacity-0" : ""}`} />
-              <span
-                className={`h-[1.5px] w-full bg-current transition-transform ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`}
-              />
+              <span className={`h-[1.5px] w-full bg-current transition-transform ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
             </span>
           </button>
         </div>
       </div>
 
-      {/* Mobile menu panel */}
       <nav
         id={menuId}
         aria-label="Mobile"
@@ -102,7 +105,7 @@ export default function Nav({ searchIndex }: { searchIndex: SearchItem[] }) {
         className="border-t border-[color:var(--color-carbon-line)] px-5 py-4 md:hidden"
       >
         <ul className="flex flex-col gap-1">
-          {[...LINKS, { href: "/faq", label: "Support" }].map((l) => (
+          {[...LINKS, { href: withLocale(locale, "/faq"), label: dict.nav.support }].map((l) => (
             <li key={l.href}>
               <Link
                 href={l.href}
