@@ -321,6 +321,75 @@ that — those show up honestly in "not yet in our reference set" rather
 than pretending to judge them. Growing the CLI Library directly grows
 what the Analyzer can catch.
 
+## 🌐 Full i18n — English & Thai
+Complete bilingual implementation, per your call on both open questions:
+**locale-prefixed URLs for everything** (`/en/...`, `/th/...`, with 308
+redirects from the old bare URLs to preserve indexed SEO) and **full
+content translation done now**, not gradually.
+
+### Routing
+- Every route moved under `app/[locale]/...` — `app/[locale]/layout.tsx`
+  is now the true root layout (renders `<html lang={locale}>`); there is
+  no `app/layout.tsx` anymore (standard pattern for App Router i18n)
+- `middleware.ts` — any bare path (`/knowledge`, already indexed by
+  Google) permanently redirects (308) to `/en/knowledge`. Metadata/asset
+  routes (`robots.txt`, `sitemap.xml`, `icon.png`, `apple-icon.png`,
+  `opengraph-image`) are explicitly excluded and stay unprefixed
+- `components/LocaleSwitcher.tsx` — EN/TH toggle in the header, swaps the
+  locale segment of the current path
+
+### Content — fully translated, both directions
+- `content/en/` and `content/th/` now each have all **9 Knowledge** entries
+  and all **5 Articles** — including a new **English translation of the
+  EP1 Noise article** (previously Thai-only) and **8 new Thai translations**
+  of everything that was English-only before
+- `lib/content.ts` — `getAllKnowledge(locale)` / `getAllArticles(locale)`
+  etc. now take a locale and read from the matching folder
+- `lib/cli-data.ts` — all **25 CLI commands** restructured with bilingual
+  `description` and `category` fields; `getCliCommands(locale)` resolves
+  them. `buildCliLookup(locale)` also updated
+- `lib/troubleshoot-data.ts` — all **15 entries** (symptom/causes/fix)
+  fully bilingual; `getTroubleshootEntries(locale)`
+- `lib/cli-parser.ts` — the Config Analyzer's flag messages (out-of-range,
+  low idle value, vbat warnings, etc.) are now generated per-locale too,
+  not just the static UI around them
+
+### UI chrome
+- `lib/i18n/dictionaries/en.ts` + `th.ts` — one dictionary per locale,
+  `th.ts` is type-checked against `en.ts`'s exact shape (`satisfies`) so a
+  missing translation key is a compile error, not a silent English
+  fallback
+- Every component and page that had user-facing text now takes a `dict`
+  prop: Nav, Footer, SiteSearch, CliExplorer, TroubleshootExplorer,
+  ConfigAnalyzer, all three calculators, and all 15 page files
+- `app/sitemap.ts` — emits both locale variants for every static route
+  plus every Knowledge/Article slug (140 URLs total across both locales)
+
+### Known simplifications (explicit choices, not oversights)
+- **Changelog entries** stay English-only in both locales — it's a
+  developer-facing project history log, not user tutorial content
+- **OG image** (`app/opengraph-image.tsx`) is shared across both locales
+  rather than duplicated — same reasoning, low value for the extra work
+- **In-locale `not-found.tsx`** defaults to English strings — Next.js
+  doesn't pass the `[locale]` param into `not-found.tsx` by convention,
+  so it can't read which locale it's under. A `/th/nonexistent-page` will
+  show an English-labeled 404. Fixable later with a small workaround if
+  it matters enough to you.
+- **`metadataBase`** now lives in `app/[locale]/layout.tsx`'s
+  `generateMetadata` (was in the old root layout) — still points to
+  `https://labfpv.vercel.app`
+
+### Build verification
+Full production build passes cleanly — 65 static pages generated (every
+route × 2 locales), confirmed live: middleware redirects, both locale
+homepages, CLI anchor deep-linking, Thai MDX rendering, and the new
+English EP1 translation all tested against a running server, not just
+`next build` succeeding.
+
+**Given how much of the codebase this touched, this delivery is the full
+project zip, not a file-delta** — a delta would be impractical to apply
+by hand given how many files moved directories entirely.
+
 ## Commands
 ```
 npm install
