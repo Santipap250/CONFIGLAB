@@ -1,1 +1,44 @@
+---
+title: "A Beginner's First Betaflight Setup Checklist"
+description: "The order of operations for a new build's first configuration pass, before the first flight."
+date: "2026-03-05"
+tags: ["setup", "beginner"]
+---
 
+A new build's first Betaflight setup has a natural order — skipping ahead
+usually means redoing an earlier step once something doesn't behave.
+
+## 1. Firmware and ports
+
+Flash the correct target firmware for your flight controller, then
+configure ports (UART assignments for your receiver, VTX, and any other
+peripherals) before touching anything else — nothing downstream works
+without this being correct.
+
+## 2. Receiver
+
+Set the correct `serialrx_provider` matching your receiver's protocol, bind
+it, and confirm channels move correctly in the Receiver tab.
+
+## 3. Modes
+
+Assign your arm switch and at least one flight mode (Angle is the standard
+first choice) to a switch before your first power-up with props on.
+
+## 4. Motor direction and mixer
+
+With props off, confirm each motor spins the correct direction for your
+mixer and prop rotation, and that motor order matches the configurator's
+layout — this is safety-critical, not a tuning preference.
+
+## 5. Failsafe
+
+Configure and bench-test failsafe procedure with props off before ever
+arming with props on. See <em>Radio Link &amp; Failsafe</em> in the
+Knowledge Hub for what to actually test.
+
+## 6. First flight defaults
+
+Fly the first flight on close-to-default PID and filter values in Angle
+mode, in an open area, and log it — the Tuning Guide's process starts from
+that first blackbox log, not from default values alone.
