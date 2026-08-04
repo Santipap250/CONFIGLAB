@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllKnowledge, getAllArticles } from "@/lib/content";
+import { LOCALES, withLocale } from "@/lib/i18n/locales";
 
 const BASE_URL = "https://labfpv.vercel.app";
 
@@ -22,23 +23,31 @@ const STATIC_ROUTES = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
-    url: `${BASE_URL}${route}`,
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : 0.7,
-  }));
+  const entries: MetadataRoute.Sitemap = [];
 
-  const knowledgeEntries: MetadataRoute.Sitemap = getAllKnowledge().map((k) => ({
-    url: `${BASE_URL}/knowledge/${k.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  for (const locale of LOCALES) {
+    for (const route of STATIC_ROUTES) {
+      entries.push({
+        url: `${BASE_URL}${withLocale(locale, route)}`,
+        changeFrequency: route === "" ? "weekly" : "monthly",
+        priority: route === "" ? 1 : 0.7,
+      });
+    }
+    for (const k of getAllKnowledge(locale)) {
+      entries.push({
+        url: `${BASE_URL}${withLocale(locale, `/knowledge/${k.slug}`)}`,
+        changeFrequency: "monthly",
+        priority: 0.6,
+      });
+    }
+    for (const a of getAllArticles(locale)) {
+      entries.push({
+        url: `${BASE_URL}${withLocale(locale, `/articles/${a.slug}`)}`,
+        changeFrequency: "monthly",
+        priority: 0.6,
+      });
+    }
+  }
 
-  const articleEntries: MetadataRoute.Sitemap = getAllArticles().map((a) => ({
-    url: `${BASE_URL}/articles/${a.slug}`,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
-
-  return [...staticEntries, ...knowledgeEntries, ...articleEntries];
+  return entries;
 }
