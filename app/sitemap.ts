@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getAllKnowledge, getAllArticles } from "@/lib/content";
 import { LOCALES, withLocale } from "@/lib/i18n/locales";
+import { SITE_URL } from "@/lib/site";
 
-const BASE_URL = "https://labfpv.vercel.app";
+const BASE_URL = SITE_URL;
 
 const STATIC_ROUTES = [
   "",
