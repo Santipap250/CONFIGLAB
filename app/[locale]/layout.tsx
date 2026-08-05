@@ -15,6 +15,7 @@ import HudFrame from "@/components/HudFrame";
 import { getSearchIndex } from "@/lib/search-index";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { LOCALES, isLocale, type Locale } from "@/lib/i18n/locales";
+import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -30,7 +31,7 @@ export async function generateMetadata({
   const dict = getDictionary(locale);
 
   return {
-    metadataBase: new URL("https://labfpv.vercel.app"),
+    metadataBase: new URL(SITE_URL),
     title: {
       default: dict.meta.defaultTitle,
       template: "%s",
