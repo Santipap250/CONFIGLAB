@@ -390,6 +390,40 @@ English EP1 translation all tested against a running server, not just
 project zip, not a file-delta** — a delta would be impractical to apply
 by hand given how many files moved directories entirely.
 
+## OG image redesign — v2
+Replaced the minimal text-only OG image with a richer, poster-style
+version, based on a reference design you provided:
+- Uses the **real OBIX Config Lab brush logo** (`public/brand/obix-logo.png`),
+  embedded directly into the generated image (loaded as base64, same
+  technique as the font loading)
+- **CLI Config Analyzer mockup panel** on the right — styled like the
+  real tool's actual output (status pills, mono command names, a
+  decorative sparkline), not a generic screenshot
+- Feature tag row now includes **Config Analyzer** alongside the other
+  five sections
+- Domain footer updated to `obixconfiglab.vercel.app`
+
+**Two things deliberately left out of the reference design, on purpose:**
+- **No "10,000+ pilots" stat or testimonial quote** — those numbers
+  aren't real, and I don't fabricate user counts or quotes to make a
+  product look more popular than it is
+- **No QR code** — an OG image is a link-preview thumbnail inside a feed
+  post, not something a person holds up and scans; it doesn't serve a
+  function there
+
+**Bug found and fixed along the way:** the Thai tagline initially
+rendered as tofu boxes (□□□) — none of the previously-loaded fonts
+(Space Grotesk, IBM Plex Mono) have Thai glyph coverage. Added
+`@fontsource/ibm-plex-sans-thai` (same type family as the mono font, for
+visual consistency), bundled two weights into `assets/fonts/` the same
+way the other fonts are, and pointed the two Thai text blocks at it.
+Verified by actually rendering and viewing the output, not just a
+successful build.
+
+File size after the postbuild compression pass: ~48.5KB (was ~18.6KB for
+the simpler v1 — the logo image and extra panel add real weight, but
+it's still light for a 1200×630 PNG).
+
 ## Commands
 ```
 npm install
