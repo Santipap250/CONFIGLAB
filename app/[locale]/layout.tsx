@@ -46,11 +46,20 @@ export async function generateMetadata({
       type: "website",
       siteName: dict.meta.siteName,
       locale,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: dict.meta.defaultTitle,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.meta.defaultTitle,
       description: dict.meta.defaultDescription,
+      images: ["/opengraph-image"],
     },
     robots: {
       index: true,
