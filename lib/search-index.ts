@@ -33,6 +33,11 @@ const TOOLS_BY_LOCALE: Record<Locale, Omit<SearchItem, "type">[]> = {
       description: "Get a starting dyn_notch_min_hz / max_hz range from motor KV and cell count.",
       href: "/tools/filters",
     },
+    {
+      title: "Motor Sound Analyzer",
+      description: "Use your phone's mic to see the live frequency spectrum of motor noise and spot a dominant peak.",
+      href: "/tools/motor-sound",
+    },
   ],
   th: [
     {
@@ -54,6 +59,11 @@ const TOOLS_BY_LOCALE: Record<Locale, Omit<SearchItem, "type">[]> = {
       title: "Dynamic Notch Range Helper",
       description: "หาค่าเริ่มต้นของ dyn_notch_min_hz / max_hz จาก KV มอเตอร์และจำนวนเซลล์",
       href: "/tools/filters",
+    },
+    {
+      title: "Motor Sound Analyzer",
+      description: "ใช้ไมค์มือถือฟังเสียงมอเตอร์แบบสด ดูกราฟความถี่เพื่อจับสัญญาณผิดปกติ",
+      href: "/tools/motor-sound",
     },
   ],
 };
