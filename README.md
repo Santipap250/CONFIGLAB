@@ -424,6 +424,41 @@ File size after the postbuild compression pass: ~48.5KB (was ~18.6KB for
 the simpler v1 — the logo image and extra panel add real weight, but
 it's still light for a 1200×630 PNG).
 
+## Motor Sound Analyzer
+The second flagship idea from the brainstorm (Config Analyzer was #1) —
+`/tools/motor-sound`. Real, working microphone-based FFT tool, not a mockup:
+
+- `components/MotorSoundAnalyzer.tsx` — `getUserMedia` → `AudioContext` →
+  `AnalyserNode` (8192-point FFT) → live canvas spectrum (20Hz–2000Hz),
+  amber-highlighted dominant peak, exponentially-smoothed peak readout so
+  it doesn't flicker every frame, a signal-level meter, and an optional
+  blade-count input that converts the peak into an estimated RPM **if**
+  that peak is blade-pass frequency
+- Full permission-state handling: idle → requesting → listening, plus
+  explicit `denied` / `unsupported` (no Web Audio API) / `error` (non-HTTPS)
+  states, each with its own message — not just a generic failure
+- Mic stream and `AudioContext` are properly torn down on Stop / unmount
+  (`getTracks().forEach(stop)`, `audioCtx.close()`) — doesn't leave the mic
+  hot in the background
+- **Accuracy is stated honestly in the tool itself**, not just in this
+  README: a detected peak could be blade-pass frequency, motor electrical
+  frequency, or frame resonance — not automatically one specific thing.
+  Framed explicitly as a diagnostic aid, not a lab instrument, matching
+  the "rule-of-thumb, not a measurement" voice used everywhere else on
+  the site (Filter Range Helper, etc.)
+- Privacy line: audio is processed on-device in real time, nothing is
+  recorded/saved/uploaded — true, since there's no backend at all
+- Wired into: Tools index (4th tool), search index (both locales),
+  sitemap, full EN/TH dictionary coverage
+
+**What I couldn't verify from here:** actual audio input — this sandbox
+has no microphone. The Web Audio API code follows the standard, correct
+pattern (this isn't experimental API usage), and the build/render/locale
+checks all passed, but you're the first real test with an actual spinning
+motor. If the peak detection feels too jumpy or too smoothed, the
+`PEAK_SMOOTHING` constant at the top of the component (currently `0.85`)
+is the one number to tune.
+
 ## Commands
 ```
 npm install
