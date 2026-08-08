@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   "/tools/battery",
   "/tools/rates",
   "/tools/filters",
+  "/tools/motor-sound",
   "/articles",
   "/faq",
   "/changelog",
