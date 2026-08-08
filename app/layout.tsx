@@ -14,6 +14,10 @@ import { DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n/locales";
 export const metadata: Metadata = {
   title: "OBIX CONFIG LAB",
   description: "FPV configuration, tuning, troubleshooting, and knowledge lab.",
+
+  verification: {
+  google: "Eyh1zNAgmJEbGr52OpkGTmradGijdm7KMIlOex-6ppQ",
+},
 };
 
 export default async function RootLayout({
