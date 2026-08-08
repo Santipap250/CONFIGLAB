@@ -3,7 +3,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { withLocale, isLocale, type Locale } from "@/lib/i18n/locales";
 import { notFound } from "next/navigation";
 
-const TOOL_HREFS = ["/tools/battery", "/tools/rates", "/tools/filters"];
+const TOOL_HREFS = ["/tools/battery", "/tools/rates", "/tools/filters", "/tools/motor-sound"];
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
