@@ -76,7 +76,7 @@ Can add dedicated routes later if you want shareable per-command URLs.
   automatically — new content appears in the sitemap with no manual edits
 
 **Before deploying:** `metadataBase` and the sitemap/robots `BASE_URL` are
-placeholder (`https://obixconfig-lab.vercel.app`) — update both to the real
+placeholder (`https://obixconfiglab.vercel.app`) — update both to the real
 production domain once you deploy.
 
 ## Status: all sitemap pages from the original brief are live
