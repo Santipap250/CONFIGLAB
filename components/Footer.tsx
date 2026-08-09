@@ -65,22 +65,9 @@ export default function Footer({ locale, dict }: { locale: Locale; dict: Diction
           ))}
         </div>
         <div className="signal-rule my-10" />
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="font-[family-name:var(--font-mono)] text-[11px] text-[color:var(--color-ash)]">
-            © {new Date().getFullYear()} {dict.footer.copyright}
-          </p>
-          <p className="font-[family-name:var(--font-mono)] text-[11px] text-[color:var(--color-ash)]">
-            {dict.footer.builtBy}{" "}
-            <a
-              href="https://www.facebook.com/santipab.songkarak"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[color:var(--color-phosphor-dim)] transition-colors hover:text-[color:var(--color-phosphor)]"
-            >
-              Santipab Songkarak
-            </a>
-          </p>
-        </div>
+        <p className="font-[family-name:var(--font-mono)] text-[11px] text-[color:var(--color-ash)]">
+          © {new Date().getFullYear()} {dict.footer.copyright}
+        </p>
       </div>
     </footer>
   );
