@@ -127,6 +127,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="mt-9 flex justify-center">
           <FacebookConnect />
         </div>
+        <p className="mt-6 font-[family-name:var(--font-mono)] text-[11px] text-[color:var(--color-ash)]">
+          {dict.footer.builtBy}{" "}
+          <a
+            href="https://www.facebook.com/santipab.songkarak"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[color:var(--color-phosphor-dim)] transition-colors hover:text-[color:var(--color-phosphor)]"
+          >
+            Santipab Songkarak
+          </a>
+        </p>
       </section>
     </div>
   );
