@@ -81,19 +81,11 @@ export default async function RootLayout({
   const dict = getDictionary(locale);
 
   return (
-    <html lang={locale}>
-      <body className="antialiased">
-        <HudFrame />
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-sm focus:bg-[color:var(--color-phosphor)] focus:px-4 focus:py-2 focus:font-[family-name:var(--font-mono)] focus:text-[13px] focus:text-[color:var(--color-carbon)]"
-        >
-          {dict.nav.skipToContent}
-        </a>
-        <Nav locale={locale} dict={dict} searchIndex={getSearchIndex(locale)} />
-        <main id="main-content">{children}</main>
-        <Footer locale={locale} dict={dict} />
-      </body>
-    </html>
+    <>
+      <HudFrame />
+      <Nav locale={locale} dict={dict} searchIndex={getSearchIndex(locale)} />
+      <main id="main-content">{children}</main>
+      <Footer locale={locale} dict={dict} />
+    </>
   );
 }
