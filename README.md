@@ -2,6 +2,14 @@
 
 FPV / Betaflight reference lab — Next.js 16 (App Router), TypeScript, Tailwind CSS v4.
 
+## Production
+
+🌐 Production:
+https://obixconfiglab.vercel.app
+
+🗺️ Sitemap:
+https://obixconfiglab.vercel.app/sitemap.xml
+
 ## Phase 1 (this delivery)
 - Project scaffold, design token system (`app/globals.css`)
 - Self-hosted fonts via `@fontsource` (Space Grotesk / IBM Plex Mono / Inter —
@@ -78,6 +86,33 @@ Can add dedicated routes later if you want shareable per-command URLs.
 **Before deploying:** `metadataBase` and the sitemap/robots `BASE_URL` are
 placeholder (`https://obixconfiglab.vercel.app`) — update both to the real
 production domain once you deploy.
+
+## Copyright and Usage
+
+© 2026 OBIX CONFIG LAB. All Rights Reserved.
+
+The original source code, documentation, articles, FPV knowledge
+content, configuration guides, tools, calculators, visual assets,
+branding, logos, and other original materials created for
+OBIX CONFIG LAB are protected by applicable copyright laws.
+
+No permission is granted to copy, modify, reproduce, redistribute,
+publish, sublicense, sell, or commercially reuse the original
+OBIX CONFIG LAB materials without prior written permission from
+the copyright holder.
+
+This public repository is provided for transparency, reference,
+and project development. Public visibility of the repository does
+not by itself grant permission to reuse the original materials.
+
+See [LICENSE](./LICENSE) for the full copyright notice.
+
+## Security
+
+Security vulnerabilities should be reported privately rather than
+disclosed through public GitHub Issues.
+
+See [SECURITY.md](./SECURITY.md) for the reporting policy.
 
 ## Status: all sitemap pages from the original brief are live
 25 routes total (26 including the OG image route), all statically
