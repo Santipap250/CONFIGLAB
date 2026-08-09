@@ -269,7 +269,7 @@ const en = {
       { q: "Is this specific to Betaflight, or does it cover other firmware?", a: "OBIXCONFIG LAB focuses on Betaflight — the most widely used FPV flight controller firmware. There's no plan currently to cover other firmware in depth." },
       { q: "Are the CLI defaults and ranges guaranteed accurate for my firmware version?", a: "Defaults and ranges shift slightly between Betaflight versions. Treat CLI Library values as a strong reference point, and always cross-check against diff output from your own flight controller for anything safety-critical." },
       { q: "Why don't the calculators give one exact number?", a: "Because there isn't one — the right value depends on your specific frame, motors, props, and flying style. The tools here get you to a sensible, explained starting point rather than a false sense of precision." },
-      { q: "Can I contribute an article, CLI entry, or troubleshooting case?", a: "Yes — the project is open on GitHub. Open an issue or a pull request with what you'd like to add." },
+      { q: "Can I contribute an article, CLI entry, or troubleshooting case?", a: "You're welcome to open an issue with feedback, corrections, or suggestions — that's genuinely useful. Reusing the site's code or content yourself, including via a pull request that gets merged, needs permission first; see LICENSE in the repository." },
       { q: "I found something inaccurate. How do I report it?", a: "Open an issue on the GitHub repository with the page and what you believe is wrong — accuracy here matters more than anything else." },
     ],
     stillNeed: "Still need something?",
@@ -284,7 +284,7 @@ const en = {
     items: [
       { title: "Betaflight (official firmware repository)", desc: "Source code, release notes, and the canonical place to confirm exact CLI behavior for your firmware version." },
       { title: "Betaflight Configurator", desc: "The desktop app used to flash firmware, edit CLI settings, and pull blackbox logs off your flight controller." },
-      { title: "OBIXCONFIG LAB (this project)", desc: "Source for this site — open an issue or PR to contribute a fix or a new reference entry." },
+      { title: "OBIXCONFIG LAB (this project)", desc: "Source for this site — open an issue for feedback or corrections. Reusing the code or content needs permission first; see the repository's LICENSE." },
     ],
   },
   notFound: {
