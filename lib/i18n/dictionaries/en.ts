@@ -37,6 +37,7 @@ const en = {
     faqSupport: "FAQ / Support",
     community: "Community",
     copyright: "OBIXCONFIG LAB — built for pilots who read their own blackbox.",
+    builtBy: "Built by",
   },
   home: {
     badge: "FPV Analyzer Lab",

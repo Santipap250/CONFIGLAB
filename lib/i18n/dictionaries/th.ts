@@ -39,6 +39,7 @@ const th: Dictionary = {
     faqSupport: "FAQ / ช่วยเหลือ",
     community: "ชุมชน",
     copyright: "OBIXCONFIG LAB — สร้างมาเพื่อนักบินที่อ่าน blackbox ของตัวเองเป็น",
+    builtBy: "พัฒนาโดย",
   },
   home: {
     badge: "FPV Analyzer Lab",
