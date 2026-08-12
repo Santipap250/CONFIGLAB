@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
-import { withLocale, type Locale } from "@/lib/i18n/locales";
+import { withLocale, isLocale, DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locales";
 
 const LINK_HREFS: Record<string, string> = {
   analyzer: "/analyzer",
@@ -9,12 +12,18 @@ const LINK_HREFS: Record<string, string> = {
   troubleshoot: "/troubleshoot",
 };
 
-// Note: this component can't read the [locale] param directly (Next's
-// not-found convention doesn't pass route params), so it defaults to
-// English. The root app/not-found.tsx (outside any locale) covers
-// truly-unmatched paths that never got a locale prefix at all.
+// Next.js's not-found.tsx convention doesn't receive route params as
+// props — but the browser's actual URL still has the locale in it
+// (/en/... or /th/...), so we read it client-side via usePathname()
+// instead of always defaulting to English.
+function useCurrentLocale(): Locale {
+  const pathname = usePathname() || "";
+  const firstSegment = pathname.split("/")[1];
+  return isLocale(firstSegment) ? firstSegment : DEFAULT_LOCALE;
+}
+
 export default function NotFound() {
-  const locale: Locale = "en";
+  const locale = useCurrentLocale();
   const dict = getDictionary(locale);
   const t = dict.notFound;
 
