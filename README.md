@@ -494,6 +494,21 @@ motor. If the peak detection feels too jumpy or too smoothed, the
 `PEAK_SMOOTHING` constant at the top of the component (currently `0.85`)
 is the one number to tune.
 
+## Advanced Tuning EP2
+Second entry in the "Advanced Tuning" Knowledge Hub category (`order: 10`,
+right after EP1's `order: 9`) — "Where does noise actually come from in
+an FPV drone." Walks through the 5 real-world noise sources (ESC/motor,
+wire routing, rigid FC mounting, props/frame, VTX) and cross-links to
+*Motor & ESC Basics* and *Understanding Gyro & D-term Filters*.
+
+Unlike EP1 (which launched Thai-only and got an English translation
+later), **EP2 shipped bilingual from the start** —
+`content/th/knowledge/advanced-tuning-ep2-where-noise-comes-from.mdx` and
+the matching `content/en/...` file went in together. No code changes
+needed — it just showed up in the Knowledge Hub, search index, and
+sitemap automatically once the two `.mdx` files existed, same as every
+other content addition on this site.
+
 ## Commands
 ```
 npm install
