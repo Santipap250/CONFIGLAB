@@ -1,0 +1,68 @@
+---
+title: "Advanced Tuning EP2: Where Does Noise Actually Come From in an FPV Drone? The Most Common Mistakes"
+description: "Now that you know noise is the silent enemy, the next question is where it comes from — walking through ESCs, wiring, FC mounting, props, and VTX one by one."
+category: "Advanced Tuning"
+order: 10
+---
+
+Once you know noise is the silent enemy of your drone, the next question
+is: where does it actually come from? Why do some builds have far more
+noise than others that look nearly identical?
+
+The answer lives in these spots.
+
+## 1) ESCs + motors (the #1 source of noise)
+
+ESCs switch at very high frequencies, and every time you add or reduce
+throttle, interference is generated immediately. A low-quality ESC, no
+capacitor, or long/poorly-twisted wiring makes noise spike right away. See
+<a href="/knowledge/motor-esc-basics">Motor &amp; ESC Basics</a> for the
+underlying protocol and RPM-filtering fundamentals that help here.
+
+## 2) Wire routing (a small thing that can wreck the whole build)
+
+High-current power wires routed close to the gyro, camera cable, or VTX
+cable feed noise straight into the flight controller without you ever
+noticing. A build with clean wire routing is almost always noticeably
+calmer.
+
+## 3) Mounting the FC too rigidly
+
+Bolting the FC down hard with no rubber grommets or soft-mount lets frame
+vibration transmit straight into the gyro. The result: the gyro reads
+garbage, PID is constantly over-correcting, and the quad shakes in a way
+that's hard to trace back to a cause.
+
+## 4) Props and frame
+
+Unbalanced props, or a frame that's slightly warped or cracked, create
+mechanical noise that's genuinely hard for filters to clean up. See
+<a href="/knowledge/gyro-dterm-filters">Understanding Gyro &amp; D-term
+Filters</a> for why mechanical noise specifically is a limit on what
+filtering alone can fix.
+
+## 5) VTX and camera
+
+A high-power VTX without proper power isolation lets noise flow back into
+the rest of the system. Symptoms include video tearing, glitching frames,
+and gyro readings drifting without any obvious cause.
+
+## The truth a lot of people don't want to accept
+
+> Most noise doesn't come from a Betaflight setting — it comes from how
+> the build was actually put together.
+
+## EP2 summary
+
+Noise is both electrical and mechanical. ESCs and wiring are the primary
+sources. Build quality matters just as much as PID values do.
+
+## Coming up next
+
+- How to fix noise without buying anything new
+- What to do before ever touching PID or filters
+
+---
+
+*Content adapted from the Advanced Tuning series on the{" "}
+<a href="https://www.facebook.com/banmysanti" target="_blank" rel="noopener noreferrer">OBIX Config Lab</a> Facebook page*
