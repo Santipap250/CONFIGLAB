@@ -12,6 +12,7 @@ export type KnowledgeEntry = {
   description: string;
   category: string;
   order?: number;
+  coverImage?: string;
 };
 
 export type ArticleEntry = {
