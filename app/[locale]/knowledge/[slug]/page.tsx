@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllKnowledge, getKnowledgeBySlug } from "@/lib/content";
@@ -20,7 +21,11 @@ export async function generateMetadata({
   const locale: Locale = isLocale(rawLocale) ? rawLocale : "en";
   const entry = getKnowledgeBySlug(locale, slug);
   if (!entry) return {};
-  return { title: `${entry.title} — ${getDictionary(locale).meta.siteName}`, description: entry.description };
+  return {
+    title: `${entry.title} — ${getDictionary(locale).meta.siteName}`,
+    description: entry.description,
+    ...(entry.coverImage && { openGraph: { images: [entry.coverImage] } }),
+  };
 }
 
 export default async function KnowledgeEntryPage({
@@ -50,6 +55,12 @@ export default async function KnowledgeEntryPage({
       <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-[color:var(--color-paper)] md:text-4xl">
         {entry.title}
       </h1>
+
+      {entry.coverImage && (
+        <div className="relative mt-8 aspect-[1200/630] w-full overflow-hidden rounded-md border border-[color:var(--color-carbon-line)]">
+          <Image src={entry.coverImage} alt="" fill sizes="768px" className="object-cover" priority />
+        </div>
+      )}
 
       <div className="signal-rule my-10" />
 
