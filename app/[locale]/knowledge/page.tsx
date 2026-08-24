@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getAllKnowledge } from "@/lib/content";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { withLocale, isLocale, type Locale } from "@/lib/i18n/locales";
@@ -46,17 +47,30 @@ export default async function KnowledgePage({ params }: { params: Promise<{ loca
                 <Link
                   key={e.slug}
                   href={withLocale(locale, `/knowledge/${e.slug}`)}
-                  className="group rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] p-6 transition-colors hover:border-[color:var(--color-phosphor-dim)]"
+                  className="group overflow-hidden rounded-md border border-[color:var(--color-carbon-line)] bg-[color:var(--color-carbon-raised)] transition-colors hover:border-[color:var(--color-phosphor-dim)]"
                 >
-                  <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold text-[color:var(--color-paper)]">
-                    {e.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-ash)]">
-                    {e.description}
-                  </p>
-                  <span className="mt-4 inline-block font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-phosphor)] opacity-0 transition-opacity group-hover:opacity-100">
-                    →
-                  </span>
+                  {e.coverImage && (
+                    <div className="relative aspect-[1200/630] w-full overflow-hidden border-b border-[color:var(--color-carbon-line)]">
+                      <Image
+                        src={e.coverImage}
+                        alt=""
+                        fill
+                        sizes="(min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold text-[color:var(--color-paper)]">
+                      {e.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[color:var(--color-ash)]">
+                      {e.description}
+                    </p>
+                    <span className="mt-4 inline-block font-[family-name:var(--font-mono)] text-[12px] text-[color:var(--color-phosphor)] opacity-0 transition-opacity group-hover:opacity-100">
+                      →
+                    </span>
+                  </div>
                 </Link>
               ))}
           </div>
