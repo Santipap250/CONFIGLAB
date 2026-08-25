@@ -1,23 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { LOCALES, DEFAULT_LOCALE } from "@/lib/i18n/locales";
 
-// Metadata/asset routes that must never get a locale prefix.
-const RESERVED_PATHS = new Set([
-  "/robots.txt",
-  "/sitemap.xml",
-  "/icon.png",
-  "/apple-icon.png",
-  "/opengraph-image",
-  "/favicon.ico",
-]);
-
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Any static asset — anything under /public (icons, OG image route,
+  // robots.txt, sitemap.xml, /covers/*.png, /brand/*.png, future assets
+  // we haven't thought of yet) has a file extension on its last segment,
+  // or is the extension-less /opengraph-image route. Skip middleware for
+  // all of them generically instead of hand-maintaining an allowlist —
+  // an allowlist is exactly what silently broke /covers/*.png before.
+  const lastSegment = pathname.split("/").pop() ?? "";
+  const looksLikeStaticFile = /\.[a-zA-Z0-9]+$/.test(lastSegment);
 
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
-    RESERVED_PATHS.has(pathname)
+    pathname === "/opengraph-image" ||
+    looksLikeStaticFile
   ) {
     return NextResponse.next();
   }
