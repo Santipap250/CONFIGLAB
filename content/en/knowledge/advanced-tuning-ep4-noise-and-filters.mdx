@@ -1,0 +1,69 @@
+---
+title: "Advanced Tuning EP4: Noise and Filters — How to Filter Without Making the Quad Feel Sluggish"
+description: "A lot of pilots filter noise until the quad looks stable, but it flies sluggish and dull — because it was filtered the wrong way. Here's how much filtering is actually enough."
+category: "Advanced Tuning"
+order: 12
+coverImage: "/covers/advanced-tuning-ep4.png"
+---
+
+A common experience: "I added filtering and the quad looks stable, so why
+does it feel sluggish and dull to fly?" Filtering noise the wrong way
+makes a quad *look* stable without actually flying well.
+
+## What a filter actually is
+
+A filter "cuts unnecessary interference" so PID can read a clearer
+signal. The problem is that cutting too much means real information gets
+lost too. See <a href="/knowledge/gyro-dterm-filters">Understanding Gyro
+&amp; D-term Filters</a> for the fundamentals of each filter stage.
+
+## What happens when you over-filter
+
+The quad responds slower, throttle feels dull, it feels vaguely
+"floaty," and it's harder to control on fast maneuvers — the trace looks
+clean, but the feel is wrecked.
+
+## Why some builds filter lightly and still fly great
+
+Because their noise was low to begin with: good build quality, balanced
+props and motors that don't vibrate. A build like that doesn't need heavy
+filtering to stay stable and controllable — this connects directly to
+<a href="/knowledge/advanced-tuning-ep3-fixing-noise-for-free">EP3</a>,
+where build quality mattered just as much as software settings.
+
+## Filters don't "cover up everything"
+
+If props are warped, motors vibrate, or wiring is pressing against the
+gyro — filtering only helps partially. It never fixes the actual root
+cause.
+
+## The mindset: filter without making it sluggish
+
+Keep it simple: filter only as much as necessary, don't filter to hide a
+problem, and don't filter in place of good build quality. A good build is
+one that stays stable with the *least* filtering possible.
+
+## The order to remember
+
+1. Reduce physical noise first
+2. Set filters to just the right amount
+3. Only then adjust PID
+
+Doing it in the wrong order means the quad only looks stable on a screen
+— not in the air. This is the same core idea behind the <a
+href="/tuning">Tuning Guide</a>.
+
+## EP4 summary
+
+> Filters aren't a magic fix. Over-filtering makes a quad sluggish.
+> The right amount of filtering keeps it alive.
+
+## Coming up next (EP5)
+
+- How to tell your build is filtered "just right"
+- Which signals to cut, and which ones to leave alone
+
+---
+
+*Content adapted from the Advanced Tuning series on the{" "}
+<a href="https://www.facebook.com/banmysanti" target="_blank" rel="noopener noreferrer">OBIX Config Lab</a> Facebook page*
