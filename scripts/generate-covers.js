@@ -77,12 +77,33 @@ const ICONS = {
       ],
     },
   },
+  funnel: {
+    type: "svg",
+    props: {
+      viewBox: "0 0 24 24",
+      width: 56,
+      height: 56,
+      fill: "none",
+      children: [
+        {
+          type: "path",
+          props: {
+            d: "M3.5 4.5h17L14 12.5v6l-4 1.5v-7.5Z",
+            stroke: AMBER,
+            strokeWidth: 1.6,
+            strokeLinejoin: "round",
+          },
+        },
+      ],
+    },
+  },
 };
 
 const EPISODES = [
   { file: "advanced-tuning-ep1.png", ep: "EP1", tagEn: "WHAT IS NOISE", icon: "warning" },
   { file: "advanced-tuning-ep2.png", ep: "EP2", tagEn: "WHERE IT COMES FROM", icon: "nodes" },
   { file: "advanced-tuning-ep3.png", ep: "EP3", tagEn: "FIXING IT FOR FREE", icon: "fix" },
+  { file: "advanced-tuning-ep4.png", ep: "EP4", tagEn: "NOISE & FILTERS", icon: "funnel" },
 ];
 
 async function main() {
